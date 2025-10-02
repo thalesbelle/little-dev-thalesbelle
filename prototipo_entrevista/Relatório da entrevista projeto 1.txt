@@ -1,0 +1,11 @@
+Tópicos principais que devem conter no sistema:
+-Nome do professor ou monitor que reservará a sala;
+-Período em que a sala será reservada(matutino, vespertino, noturno);
+-Horários que o professor e a turma ficarão na sala;
+-Andar em que o laboratório ou sala está localizado;
+-Mostrar a indisponibilidade da sala com o nome do reservista e até quando ficará reservada;
+-Quantidade de pessoas que cabem na sala ou laboratório, e na hora de reservar, espaço para colocar quantas pessoas irão para a sala;
+-Regras a seguir para reservar (não retirar as chaves se não tiver a reserva, somente quem reservoui pode pegar as chaves, além disso, ao reservar as regras de conduta devem estar na desrcrição da sala);
+-Aba que mostra as salas disponíveis(verde), indisponíveis(vermelho) e as salas que estão reservadas mas não para aquele dia em específico(amarelo);
+-Deve conter um relatório pós reserva para relatar tudo que aconteceu na sala, se necessita de limpeza, etc. Além disso, deve conter um relatório para o estojo, verificar se tudo está do jeito que o reservista pegou;
+-Letras maiores, modo claro e escuro, customização de cores.

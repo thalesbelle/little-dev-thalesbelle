@@ -1,0 +1,32 @@
+body, html{
+    margin: 0;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 0%;
+}
+
+#cabecalhoImagem{
+    width: 100vw;
+    height: 40vh;
+}
+
+#sombraCabecalho{
+    width: 100vw;
+    height: 8vh;
+    position: absolute;
+    background-color: rgba(0, 107, 113, 0.301);
+}
+
+.usuario{
+    width: 3vw;
+    top: 10%;
+    right: 0.5%;
+    position: absolute
+}
+
+#logoSenai{
+    width: 12vw;
+    top: 10%;
+    left: 3%;
+    position: absolute;
+}
