@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 body, html{
     margin: 0;
     height: 100vh;
@@ -13,6 +15,7 @@ body, html{
 #sombraCabecalho{
     width: 100vw;
     height: 8vh;
+    display: flex;
     position: absolute;
     background-color: rgba(0, 107, 113, 0.301);
 }
@@ -29,4 +32,28 @@ body, html{
     top: 10%;
     left: 3%;
     position: absolute;
+}
+
+.abas {
+    font-family: 'Open Sans';
+    box-sizing: border-box;
+    font-size: 15px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5vw; 
+    position: relative;
+    transition: transform 0.5s ease-in-out, text-decoration 0.5s ease-in-out;
+    transform-origin: center center;
+}
+
+.abas:hover {
+    text-decoration: underline 1.5px;
+    transform: scale(1.05);   
+}
+
+#textoPgInicial{
+    margin-left: 25vw; 
 }
