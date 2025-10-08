@@ -14,7 +14,7 @@ app.get('/', (req,res) => {
 
 app.get('/salasLabs', async (req,res) => {
     try{
-        const results = await query('SELECT * FROM produtos');
+        const results = await query('SELECT * FROM salaslabs');
         res.json(results);
     }catch (err) {
         res.status(500).json({ error: err.message });
@@ -24,7 +24,7 @@ app.get('/salasLabs', async (req,res) => {
 app.post('/salasLabs', async (req,res) => {
     const{numero, capacidade, andar, bloco, tipo} = req.body;
     try{
-        const result = await query('INSERT INTO produtos (numero, capacidade, andar, bloco, tipo) VALUES (?,?,?,?,?)', [numero, capacidade, andar, bloco, tipo]);
+        const result = await query('INSERT INTO salaslabs (numero, capacidade, andar, bloco, tipo) VALUES (?,?,?,?,?)', [numero, capacidade, andar, bloco, tipo]);
         res.status(201).json({id: result.insertID});
     } catch(err) {
         console.error('Erro no MySql:', err);
