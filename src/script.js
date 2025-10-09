@@ -16,7 +16,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <label><strong>Capacidade:</strong> <span id="capacidade-sala-${sala.id}">${sala.capacidade}</span></label><br>
                     <label><strong>Andar:</strong> <span id="andar-sala-${sala.id}">${sala.andar}</span></label><br>
                     <label><strong>Bloco:</strong> <span id="bloco-sala-${sala.id}">${sala.bloco}</span></label><br>
-                    <label><strong>Tipo:</strong> <span id="tipo-sala-${sala.id}">${sala.tipo}</span></label><br>`
+                    <label><strong>Tipo:</strong> <span id="tipo-sala-${sala.id}">${sala.tipo}</span></label><br>
+                    <button id="reservaBotao"><strong>Reservar</strong></button>
+                    `
 
                 listaSalas.appendChild(divSala);
             });
@@ -25,6 +27,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Erro ao carregar salas');
         }
     }
+
+    const telaConfigs = document.querySelector('#telaConfiguracoes');
+    const botaoConfiguracoes = document.querySelector('.botaoConfiguracoes');
+    const overlay = document.getElementById('overlay');
+    const body = document.body;
+
+    botaoConfiguracoes.addEventListener('click', () => { 
+
+        telaConfigs.toggleAttribute('hidden');
+
+        overlay.toggleAttribute('hidden');
+
+        body.classList.toggle('no-scroll');
+    });
+
      /*
     function abrirFormularioEditar(sala) {
         const relatorioEditar = document.getElementById('relatorioEditar');

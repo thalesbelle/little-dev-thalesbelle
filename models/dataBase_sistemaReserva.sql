@@ -28,10 +28,10 @@ INSERT INTO	salasLabs(numero, capacidade, andar, bloco, tipo) VALUES
 (309, 35, 2, "3/C", "Sala"),
 (310, 45, 2, "3/C", "Sala");
 
-/*DELETE FROM salas WHERE numero = 307;*/
+DELETE FROM salasLabs WHERE numero = 310;
 
-/*SELECT * FROM salasLabs;
-SELECT * FROM reservas;*/
+SELECT * FROM salasLabs;
+SELECT * FROM reservas;
 
 /*DROP TABLE salasLabs;
 DROP TABLE reservas;
