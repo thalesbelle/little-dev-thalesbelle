@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     async function carregarSalas() {
         try {
-            const response = await fetch('/salasLabs');
+            const response = await fetch('/salas');
             const salasLabs = await response.json();
 
             const listaSalas = document.getElementById('listaSalas');
@@ -40,6 +40,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         overlay.toggleAttribute('hidden');
 
         body.classList.toggle('no-scroll');
+    });
+
+    const setaFechar = document.querySelector('#fecharConfigs');
+
+    setaFechar.addEventListener('click', () =>{
+
+        telaConfigs.setAttribute('hidden', 'hidden');
+        
+        overlay.setAttribute('hidden', 'hidden');
     });
 
      /*
