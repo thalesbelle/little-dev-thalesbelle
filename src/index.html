@@ -35,18 +35,22 @@
         <section id="telaConfiguracoes" hidden>
             <img src="./images/seta-voltar.png" class="icones" id="fecharConfigs">
             <div id="divAbasConfiguracoes">
-                <div class="divAbaIndividual">
-                    <img src="./images/configuracoes.png" class="icones">
-                    <h2 class="abasConfig">Geral</h2>
-                </div>    
-                <div class="divAbaIndividual">
-                    <img src="./images/lapis.png" class="icones">
-                    <h2 class="abasConfig">Personalização</h2>
-                </div>    
+                <div id="geral" style="display: block;">  <!-- Inicialmente visível, ou ajuste -->
+                    <div class="divAbaIndividual">
+                        <img src="./images/configuracoes.png" class="icones" id="engrenagemGeral">
+                        <h2 class="abasConfig">Geral</h2>
+                    </div>
+                    <h1 class="tituloPagina">Geral</h1>  <!-- Conteúdo da aba Geral -->
+                </div>
+                <div id="personalizacao" style="display: none;">  <!-- Inicialmente oculto -->
+                    <div class="divAbaIndividual">
+                        <img src="./images/lapis.png" class="icones">
+                        <h2 class="abasConfig">Personalização</h2>
+                    </div>
+                    <h1 class="tituloPagina">Personalização</h1>  
+                </div>
             </div>
-            <div id="linha">
-
-            </div>                
+            <div id="linha"></div>
         </section>
         <section class="containerSalas">
             <div id="listaSalas" class="divSalas"></div>
