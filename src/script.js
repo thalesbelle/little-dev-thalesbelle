@@ -42,6 +42,61 @@ document.addEventListener('DOMContentLoaded', async () => {
         body.classList.toggle('no-scroll');
     });
 
+    const abas = document.querySelectorAll('.divAbaIndividual');
+        
+    if (abas.length > 0) {
+        console.log('Adicionando eventos de clique...');
+            
+        const defaultBackground = 'white';
+        const activeBackground = 'rgba(213, 213, 213, 0.600)';
+            
+        abas.forEach(aba => {
+            console.log('Adicionando clique a:', aba);
+            aba.addEventListener('click', function() {
+                abas.forEach(a => {
+                    a.style.backgroundColor = defaultBackground;
+                });
+                aba.style.backgroundColor = activeBackground;
+            });
+        });
+    } else {
+            console.log('Nenhum elemento com classe .divAbaIndividual foi encontrado!');
+    }
+
+    const geral = document.getElementById('geral');  // Conteúdo da aba Geral
+    const personalizacao = document.getElementById('personalizacao');  // Conteúdo da aba Personalização
+    
+    // Função para ocultar todos os conteúdos
+    function ocultarTodosConteudos() {
+        if (geral) geral.style.display = 'none';
+        if (personalizacao) personalizacao.style.display = 'none';
+    }
+    
+    abas.forEach(aba => {
+        aba.addEventListener('click', function() {
+            ocultarTodosConteudos();  // Oculta todos os conteúdos primeiro
+            
+            if (aba.querySelector('h2').textContent.includes('Geral')) {  // Verifica se é a aba Geral
+                if (geral) geral.style.display = 'block';  // Mostra o conteúdo de Geral
+            } else if (aba.querySelector('h2').textContent.includes('Personalização')) {  // Verifica se é a aba Personalização
+                if (personalizacao) personalizacao.style.display = 'block';  // Mostra o conteúdo de Personalização
+            }
+        });
+    });
+
+    const engrenagem = document.querySelector('#engrenagemGeral');
+    if (engrenagem) {
+    engrenagem.addEventListener('mouseover', () => {
+        engrenagem.classList.add('girarEngrenagem');  
+    });
+    engrenagem.addEventListener('mouseleave', () => {
+        engrenagem.classList.remove('girarEngrenagem');  
+    });
+}
+
+    
+    
+
     const setaFechar = document.querySelector('#fecharConfigs');
 
     setaFechar.addEventListener('click', () =>{
