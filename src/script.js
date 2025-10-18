@@ -28,6 +28,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    const telaCadastro = document.querySelector('#telaCadastro')
+    const abaCadastro = document.querySelector('#abaCadastro')
+
+    abaCadastro.addEventListener('click', () => {
+
+        telaCadastro.toggleAttribute('hidden');
+
+        overlay.toggleAttribute('hidden');
+
+        body.classList.toggle('no-scroll');
+    });    
+
     const telaConfigs = document.querySelector('#telaConfiguracoes');
     const botaoConfiguracoes = document.querySelector('.botaoConfiguracoes');
     const overlay = document.getElementById('overlay');
