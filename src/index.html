@@ -64,21 +64,27 @@
             </div>
     </section>
     <section id="telaCadastro" hidden>
-        <img src="./images/seta-voltar.png" class="icones" id="fecharConfigs">
+        <img src="./images/seta-voltar.png" class="icones" id="fecharCadastro">
         <h1 id="tituloCadastro">Cadastro de sala</h1>
         <div class="linha3"></div>
         <div id="formularioSala">
             <label class="camposFormulario">Número da sala:</label>
-            <input type="text" id="inputReservante">
+            <input type="text" class="inputSala" id="numero">
+
             <label class="camposFormulario">Capacidade:</label>
-            <input type="text" id="inputReservante">
+            <input type="text" class="inputSala" id="capacidade">
+
             <label class="camposFormulario">Andar:</label>
-            <input type="text" id="inputReservante">
+            <input type="text" class="inputSala" id="andar">
+
             <label class="camposFormulario">Bloco:</label>
-            <input type="text" id="inputReservante">
+            <input type="text" class="inputSala" id="bloco">
+
             <label class="camposFormulario">Tipo:</label>
-            <input type="text" id="inputReservante">
+            <input type="text" class="inputSala" id="tipo">
         </div>
+        <div class="linha4"></div>
+        <button class="botaoCadastrar">Cadastrar</button>
     </section>
     <section class="containerSalas">
         <div id="listaSalas" class="divSalas"></div>

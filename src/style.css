@@ -19,12 +19,12 @@ html {
 }
 
 #cabecalhoImagem {
-    width: 100vw;
+    width: 99vw;
     height: 40vh;
 }
 
 #sombraCabecalho {
-    width: 100vw;
+    width: 99vw;
     height: 8vh;
     display: flex;
     position: absolute;
@@ -336,7 +336,7 @@ html {
     transform: rotate(90deg);
 }
 
-.linha2{
+.linha2 {
     background-color: rgba(25, 42, 107);
     position: absolute;
     top: 12%;
@@ -345,17 +345,17 @@ html {
     height: 0.1vh;
 }
 
-#inputReservante{
+#inputReservante {
     position: absolute;
     left: 58%;
     margin-top: 40%;
     border: 0;
     border-bottom: 1px solid rgba(25, 42, 107);
-    box-shadow: 0 0 4px rgba(25, 42, 107, 0.5); 
+    box-shadow: 0 0 4px rgba(25, 42, 107, 0.5);
 }
 
 #inputReservante:focus {
-    outline: none; 
+    outline: none;
 }
 
 #telaReserva:not([hidden]) {
@@ -372,13 +372,13 @@ html {
     border: 1px solid rgba(25, 42, 107);
 }
 
-#nomeReservante{
+#nomeReservante {
     position: absolute;
     left: -6%;
     margin-top: 7.2em;
 }
 
-#telaCadastro:not([hidden]){
+#telaCadastro:not([hidden]) {
     position: absolute;
     top: 10%;
     left: 30%;
@@ -392,7 +392,7 @@ html {
     border: 1px solid rgba(25, 42, 107);
 }
 
-#tituloCadastro{
+#tituloCadastro {
     position: absolute;
     left: 33%;
     top: 1%;
@@ -402,7 +402,7 @@ html {
     font-size: 27px;
 }
 
-.linha3{
+.linha3 {
     background-color: rgba(25, 42, 107);
     position: absolute;
     top: 12%;
@@ -411,18 +411,69 @@ html {
     height: 0.1vh;
 }
 
-#formularioSala{
+#formularioSala {
     position: absolute;
-    top: 10%;
+    top: 17%;
+    left: 34%;
     display: flex;
     flex-direction: column;
+    gap: 1em;
 }
 
-.camposFormulario{
+.camposFormulario {
     display: flex;
+    flex-direction: row;
     font-size: 25px;
     font-family: 'Open Sans';
     font-weight: bold;
     color: rgba(25, 42, 107);
     gap: 10rem !important;
+}
+
+#fecharCadastro {
+    position: relative;
+    margin-left: 5%;
+    transition: all 0.3s ease-in-out;
+    margin-top: 5%;
+}
+
+.inputSala {
+    border: 0;
+    border-bottom: 1px solid rgba(25, 42, 107);
+    box-shadow: 0 0 4px rgba(25, 42, 107, 0.5);
+}
+
+.inputSala:focus {
+    outline: none;
+}
+
+.linha4 {
+    background-color: rgba(25, 42, 107);
+    position: absolute;
+    top: 85%;
+    left: 10%;
+    width: 80%;
+    height: 0.1vh;
+}
+
+.botaoCadastrar {
+    font-family: 'Open Sans';
+    color: rgba(25, 42, 107);
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    top: 90%;
+    left: 38%;
+    width: 8vw;
+    height: 4vh;
+    cursor: pointer;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgb(25, 41, 107);
+    border: 0;
+    border-radius: 1em;
+    transition: all 0.4s ease-in-out;
+}
+
+.botaoCadastrar:hover {
+    transform: scale(1.03);
 }
