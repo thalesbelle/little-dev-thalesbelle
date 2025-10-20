@@ -68,7 +68,7 @@ app.post('/reservas', async (req, res) => {
     const { nomeReservante, idSala, dataInicio, dataFim, reservaStatus } = req.body;
     try {
         const result = await query('INSERT INTO reservas (nomeReservante, idSala, dataInicio, dataFim, reservaStatus) VALUES (?,?,?,?,?)', [nomeReservante, idSala, dataInicio, dataFim, reservaStatus]);
-        res.status(201).json({ id: result.insertID });
+        res.status(201).json({ id: result.insertId });
     } catch (err) {
         console.error('Erro no MySql:', err);
         res.status(500).json({ error: err.message });

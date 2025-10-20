@@ -38,7 +38,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         overlay.toggleAttribute('hidden');
 
         body.classList.toggle('no-scroll');
-    });    
+    });
+
+    const setaFechar = document.querySelector('#fecharConfigs');
+
+    setaFechar.addEventListener('click', () => {
+
+        telaConfigs.setAttribute('hidden', 'hidden');
+
+        overlay.setAttribute('hidden', 'hidden');
+    });
+
+    const setaFecharCadastro = document.querySelector('#fecharCadastro');
+
+    setaFecharCadastro.addEventListener('click', () => {
+
+        telaCadastro.setAttribute('hidden', 'hidden');
+
+        overlay.toggleAttribute('hidden');
+
+        body.classList.toggle('no-scroll');
+    });
 
     const telaConfigs = document.querySelector('#telaConfiguracoes');
     const botaoConfiguracoes = document.querySelector('.botaoConfiguracoes');
@@ -63,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const activeBackground = 'rgba(213, 213, 213, 0.600)';
 
         abas.forEach(aba => {
-            console.log('Adicionando clique a:', aba);
+
             aba.addEventListener('click', function () {
                 abas.forEach(a => {
                     a.style.backgroundColor = defaultBackground;
@@ -118,17 +138,38 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-
-    const setaFechar = document.querySelector('#fecharConfigs');
-
-    setaFechar.addEventListener('click', () => {
-
-        telaConfigs.setAttribute('hidden', 'hidden');
-
-        overlay.setAttribute('hidden', 'hidden');
+    document.querySelector('.botaoCadastrar').addEventListener('click', async () => {
+        const novaSala = {
+            numero: document.getElementById('numero').value,
+            capacidade: document.getElementById('capacidade').value,
+            andar: document.getElementById('andar').value,
+            bloco: document.getElementById('bloco').value,
+            tipo: document.getElementById('tipo').value
+        };
+    
+        try {
+            const res = await fetch('/salas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(novaSala)
+            });
+    
+            if (res.ok) {
+                alert('Sala cadastrada com sucesso!');
+                document.getElementById('telaCadastro').setAttribute('hidden', 'hidden');
+                document.getElementById('overlay').setAttribute('hidden', 'hidden');
+                document.body.classList.remove('no-scroll');
+                await carregarSalas(); // Atualiza a lista após adicionar
+            } else {
+                alert('Erro ao cadastrar sala!');
+            }
+        } catch (error) {
+            console.error('Erro ao cadastrar sala:', error);
+            alert('Erro ao cadastrar sala!');
+        }
     });
 
-    /*
+ /*
    function abrirFormularioEditar(sala) {
        const relatorioEditar = document.getElementById('relatorioEditar');
        const body = document.body;
