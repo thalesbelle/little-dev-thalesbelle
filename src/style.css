@@ -10,6 +10,16 @@
     }
 }
 
+@keyframes rodarEngrenagem {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 body,
 html {
     margin: 0;
@@ -31,20 +41,25 @@ html {
     background-color: rgba(0, 107, 113, 0.301);
 }
 
+#fundoConfig{
+    width: 2vw;
+    border-radius: 1em;
+}
+
 .botaoConfiguracoes {
     position: absolute;
     right: 2%;
-    top: 25%;
+    top: 35%;
     display: flex;
+    width: 1.3vw;
+    cursor: pointer;
     justify-content: center;
     align-items: center;
-    padding: 6px 12px;
-    gap: 8px;
-    height: 36px;
-    width: 8vw;
     border: none;
-    background: white;
-    border-radius: 20px;
+}
+
+#fundoConfig:hover {
+    background: rgba(148, 148, 148, 0.582);
     cursor: pointer;
 }
 
@@ -57,15 +72,6 @@ html {
     font-family: 'Open Sans';
     font-weight: bold;
     letter-spacing: 1px;
-}
-
-.botaoConfiguracoes:hover {
-    background: rgb(243, 243, 243);
-    cursor: pointer;
-}
-
-.botaoConfiguracoes:hover .iconeConfig {
-    animation: spin 2s linear infinite;
 }
 
 .iconeConfig {
@@ -91,16 +97,13 @@ html {
     justify-content: center;
     padding-left: 9.3vw;
     position: relative;
-    transition: transform 0.5s ease-in-out, text-decoration 0.5s ease-in-out;
     transform-origin: center center;
 }
 
 .abas:hover {
-    text-decoration: underline 1px;
     color: rgba(0, 224, 236);
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    transform: scale(1.03);
 }
 
 #textoPgInicial {
@@ -160,17 +163,7 @@ html {
     padding: 20px 0;
 }
 
-@keyframes rotateBorder {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-#reservaBotao {
+.reservaBotao:not([hidden]) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -192,11 +185,11 @@ html {
     transition: 0.4s;
 }
 
-#reservaBotao:hover {
+.reservaBotao:hover {
     box-shadow: 7px 5px 56px -5px rgb(57, 80, 173);
 }
 
-#reservaBotao:active {
+.reservaBotao:active {
     transform: scale(0.97);
     box-shadow: 7px 5px 56px -10px rgb(57, 80, 173);
 }
@@ -302,16 +295,6 @@ html {
     transition: all 0.3s ease-in-out;
 }
 
-@keyframes rodarEngrenagem {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 .girarEngrenagem {
     animation: rodarEngrenagem 2s linear infinite;
 }
@@ -358,25 +341,42 @@ html {
     outline: none;
 }
 
-#telaReserva:not([hidden]) {
-    position: absolute;
-    top: 15%;
-    left: 30%;
-    display: flex;
-    flex-direction: column;
-    background: white;
-    width: 35vw;
-    height: 70vh;
-    border-radius: 2em;
-    z-index: 21;
-    border: 1px solid rgba(25, 42, 107);
-}
-
 #nomeReservante {
     position: absolute;
     left: -6%;
     margin-top: 7.2em;
 }
+
+#formularioSala {
+    position: absolute;
+    top: 17%;
+    left: 34%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.camposFormulario {
+    display: flex;
+    flex-direction: row;
+    font-size: 25px;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    color: rgba(25, 42, 107);
+    gap: 10rem !important;
+}
+
+.inputSala {
+    border: 0;
+    border-bottom: 1px solid rgba(25, 42, 107);
+    box-shadow: 0 0 4px rgba(25, 42, 107, 0.5);
+}
+
+.inputSala:focus {
+    outline: none;
+}
+
+/*========================*Cadastro*===========================*/
 
 #telaCadastro:not([hidden]) {
     position: absolute;
@@ -402,58 +402,11 @@ html {
     font-size: 27px;
 }
 
-.linha3 {
-    background-color: rgba(25, 42, 107);
-    position: absolute;
-    top: 12%;
-    left: 10%;
-    width: 80%;
-    height: 0.1vh;
-}
-
-#formularioSala {
-    position: absolute;
-    top: 17%;
-    left: 34%;
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-}
-
-.camposFormulario {
-    display: flex;
-    flex-direction: row;
-    font-size: 25px;
-    font-family: 'Open Sans';
-    font-weight: bold;
-    color: rgba(25, 42, 107);
-    gap: 10rem !important;
-}
-
 #fecharCadastro {
     position: relative;
     margin-left: 5%;
     transition: all 0.3s ease-in-out;
     margin-top: 5%;
-}
-
-.inputSala {
-    border: 0;
-    border-bottom: 1px solid rgba(25, 42, 107);
-    box-shadow: 0 0 4px rgba(25, 42, 107, 0.5);
-}
-
-.inputSala:focus {
-    outline: none;
-}
-
-.linha4 {
-    background-color: rgba(25, 42, 107);
-    position: absolute;
-    top: 85%;
-    left: 10%;
-    width: 80%;
-    height: 0.1vh;
 }
 
 .botaoCadastrar {
@@ -476,4 +429,98 @@ html {
 
 .botaoCadastrar:hover {
     transform: scale(1.03);
+}
+
+.linha3 {
+    background-color: rgba(25, 42, 107);
+    position: absolute;
+    top: 12%;
+    left: 10%;
+    width: 80%;
+    height: 0.1vh;
+}
+
+
+.linha4 {
+    background-color: rgba(25, 42, 107);
+    position: absolute;
+    top: 85%;
+    left: 10%;
+    width: 80%;
+    height: 0.1vh;
+}
+
+/*========================*Reserva*===========================*/
+
+#telaReservar:not([hidden]) {
+    position: absolute;
+    top: 10%;
+    left: 30%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    width: 35vw;
+    height: 70vh;
+    border-radius: 2em;
+    z-index: 21;
+    border: 1px solid rgba(25, 42, 107);
+}
+
+#fecharReserva{
+    position: relative;
+    margin-left: 5%;
+    transition: all 0.3s ease-in-out;
+    margin-top: 5%;
+}
+
+#fecharReserva:hover {
+    transform: scale(1.2);
+    transition: all 0.3s ease-in-out;
+}
+
+.containerReserva{
+    background-color: rgba(25, 42, 107);  
+    position: absolute;
+    width: 35vw;
+    top: 15%;
+    left: 0%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 3em;
+}
+
+#tituloSalaReserva{
+    position: absolute;
+    top: 0%;
+    left: 40%;
+    font-family: 'Open Sans';
+    font-weight: bolder;
+    color: rgba(25, 42, 107);
+}
+
+.infoReserva{
+    font-size: 20px;
+    color: white;
+    font-family: 'Open Sans';
+    font-weight: 330;
+}
+
+#linha5{
+    background-color: rgba(25, 42, 107);
+    position: absolute;
+    top: 15%;
+    left: 0%;
+    width: 100%;
+    height: 0.1vh;
+}
+
+#linha6{
+    background-color: rgba(25, 42, 107);
+    position: absolute;
+    top: 25%;
+    left: 0%;
+    width: 100%;
+    height: 0.1vh; 
 }
