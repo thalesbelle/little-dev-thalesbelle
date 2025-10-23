@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <label><strong>Tipo:</strong> <span id="tipo-sala-${sala.idSala}">${sala.tipo}</span></label><br>
                     <button class="reservaBotao" id='sala-${sala.idSala.toString()}'><strong>Reservar</strong></button>
                     `
-               
+
                 listaSalas.appendChild(divSala);
                 const botaoReserva = document.querySelector(`#sala-${sala.idSala.toString()}`);
                 botaoReserva.addEventListener('click', () => {
@@ -28,12 +28,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                     telaReserva.removeAttribute('hidden');
                     overlay.removeAttribute('hidden');
                     body.classList.add('no-scroll');
-                
+
                     document.getElementById('tituloSalaReserva').textContent = `Sala ${sala.numero}`;
                     document.getElementById('reserva-capacidade').textContent = sala.capacidade;
                     document.getElementById('reserva-andar').textContent = sala.andar;
                     document.getElementById('reserva-bloco').textContent = sala.bloco;
                     document.getElementById('reserva-tipo').textContent = sala.tipo;
+
+                    window.idSalaSelecionada = sala.idSala;  // <---- Salva o id da sala aqui
                 });
             });
         } catch (error) {
@@ -43,7 +45,54 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const input = document.getElementById('tipo');
-    
+    const fecharReserva = document.querySelector('#fecharReserva');
+    const telaReserva = document.querySelector('#telaReservar');
+    const telaCadastro = document.querySelector('#telaCadastro');
+    const abaCadastro = document.querySelector('#abaCadastro');
+    const setaFechar = document.querySelector('#fecharConfigs');
+    const setaFecharCadastro = document.querySelector('#fecharCadastro');
+    const telaConfigs = document.querySelector('#telaConfiguracoes');
+    const botaoConfiguracoes = document.querySelector('.botaoConfiguracoes');
+    const overlay = document.getElementById('overlay');
+    const body = document.body;
+    const abas = document.querySelectorAll('.divAbaIndividual');
+    const geral = document.getElementById('geral');
+    const personalizacao = document.getElementById('personalizacao');
+    const conteudoGeral = document.getElementById('conteudoGeral');
+    const conteudoPersonalizacao = document.getElementById('conteudoPersonalizacao');
+    const tituloPaginaConfig = document.getElementById('tituloPaginaConfig');
+    const tituloSalaReserva = document.querySelector('#tituloSalaReserva');
+    const paginaInicial = document.getElementById('textoPgInicial');
+
+    paginaInicial.addEventListener('click', () => {
+        telaReserva.setAttribute('hidden', 'hidden');
+        telaCadastro.setAttribute('hidden', 'hidden');
+        telaConfigs.setAttribute('hidden', 'hidden');
+        overlay.setAttribute('hidden', 'hidden');
+        body.classList.remove('no-scroll');
+    });
+
+    const campoData = document.querySelector("#dataReserva");
+
+    if (campoData) {
+        flatpickr(campoData, {
+            dateFormat: "d/m/Y", 
+            minDate: "today", 
+            locale: "pt", 
+            disableMobile: true, 
+            showMonths: 1, 
+            showDaysOutsideMonth: false, 
+            onChange: function(selectedDates, dateStr) {
+                console.log("Data escolhida:", dateStr);
+            },
+        });
+    }
+
+    const selectHorario = document.getElementById("horario");
+    selectHorario.addEventListener("change", () => {
+      console.log("Horário selecionado:", selectHorario.value);
+    });
+
     input.addEventListener('input', () => {
         let valor = input.value;
         if (valor.length > 0) {
@@ -60,20 +109,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    const fecharReserva = document.querySelector('#fecharReserva');
-    const telaReserva = document.querySelector('#telaReservar');
-
     fecharReserva.addEventListener('click', () => {
 
         telaReserva.setAttribute('hidden', 'hidden');
-        
+
         overlay.toggleAttribute('hidden');
 
         body.classList.toggle('no-scroll');
     });
-
-    const telaCadastro = document.querySelector('#telaCadastro')
-    const abaCadastro = document.querySelector('#abaCadastro')
 
     abaCadastro.addEventListener('click', () => {
 
@@ -84,16 +127,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         body.classList.toggle('no-scroll');
     });
 
-    const setaFechar = document.querySelector('#fecharConfigs');
-
     setaFechar.addEventListener('click', () => {
 
         telaConfigs.setAttribute('hidden', 'hidden');
 
         overlay.setAttribute('hidden', 'hidden');
     });
-
-    const setaFecharCadastro = document.querySelector('#fecharCadastro');
 
     setaFecharCadastro.addEventListener('click', () => {
 
@@ -104,11 +143,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         body.classList.toggle('no-scroll');
     });
 
-    const telaConfigs = document.querySelector('#telaConfiguracoes');
-    const botaoConfiguracoes = document.querySelector('.botaoConfiguracoes');
-    const overlay = document.getElementById('overlay');
-    const body = document.body;
-
     botaoConfiguracoes.addEventListener('click', () => {
 
         telaConfigs.toggleAttribute('hidden');
@@ -117,9 +151,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         body.classList.toggle('no-scroll');
     });
-
-
-    const abas = document.querySelectorAll('.divAbaIndividual');
 
     if (abas.length > 0) {
 
@@ -138,17 +169,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
     }
 
-    const geral = document.getElementById('geral');
-    const personalizacao = document.getElementById('personalizacao');
-
     function ocultarTodosConteudos() {
         if (geral) geral.style.display = 'none';
         if (personalizacao) personalizacao.style.display = 'none';
     }
-
-    const conteudoGeral = document.getElementById('conteudoGeral');
-    const conteudoPersonalizacao = document.getElementById('conteudoPersonalizacao');
-    const tituloPaginaConfig = document.getElementById('tituloPaginaConfig');
 
     abas.forEach(aba => {
         aba.addEventListener('click', () => {
@@ -179,8 +203,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             engrenagem.classList.remove('girarEngrenagem');
         });
     }
-
-
 
     document.querySelector('.botaoCadastrar').addEventListener('click', async () => {
         const novaSala = {
@@ -213,97 +235,49 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    const tituloSalaReserva = document.querySelector('#tituloSalaReserva')
+    // --- FORMULÁRIO DE RESERVA ---
+    document.getElementById('formReserva').addEventListener('submit', async (e) => {
+        e.preventDefault();
 
+        const data = document.getElementById('dataReserva').value; // "dd/mm/yyyy"
+        const horario = document.getElementById('horario').value;  // "07:30-08:20"
+        const nomeReservante = document.getElementById('inputReservante').value;
 
-    /*
-      function abrirFormularioEditar(sala) {
-          const relatorioEditar = document.getElementById('relatorioEditar');
-          const body = document.body;
-   
-          relatorioEditar.style.display = 'block';
-          body.classList.add('fundoEscuro');
-   
-          document.getElementById('numeroSalaEditar').value = sala.nome;
-          document.getElementById('capacidadeEditar').value = sala.capacidade;
-          document.getElementById('andarEditar').value = sala.andar;
-          document.getElementById('blocoEditar').value = sala.bloco;
-          document.getElementById('tipoEditar').value = sala.tipo;
-   
-          const formEditar = document.getElementById('formEditarSala');
-          formEditar.onsubmit = async (e) => {
-              e.preventDefault();
-              const novaSala = {
-                  numero: document.getElementById('numeroSalaEditar').value,
-                  capacidade: document.getElementById('capacidadeEditar').value,
-                  andar: document.getElementById('andarEditar').value,
-                  bloco: document.getElementById('blocoEditar').value,
-                  tipo: document.getElementById('tipoEditar').value
-              };
-   
-              try {
-                  const res = await fetch(`/salasLabs/${sala.idSala}`, {
-                      method: 'PUT',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify(novaSala)
-                  });
-   
-                  if (res.ok) {
-                      document.getElementById(`numero-sala-${sala.idSala}`).textContent = novaSala.numero;
-                      document.getElementById(`capacidade-sala-${sala.idSala}`).textContent = novaSala.capacidade;
-                      document.getElementById(`andar-sala-${sala.idSala}`).textContent = novaSala.andar;
-                      document.getElementById(`bloco-sala-${sala.idSala}`).textContent = novaSala.bloco;
-                      document.getElementById(`tipo-sala-${sala.idSala}`).textContent = novaSala.tipo;
-   
-                      relatorioEditar.style.display = 'none';
-                      body.classList.remove('fundoEscuro');
-                      alert('Sala atualizada com sucesso!');
-                  } else {
-                      alert('Erro ao atualizar sala');
-                  }
-              } catch (error) {
-                  console.error('Erro:', error);
-                  alert('Erro ao atualizar sala');
-              }
-          };
-      }
-   
-      document.getElementById('formSala').addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const novaSala = {
-              numero: document.getElementById('numero').value,
-              capacidade: document.getElementById('capacidade').value,
-              andar: document.getElementById('andar').value,
-              bloco: document.getElementById('bloco').value,
-              tipo: document.getElementById('tipo').value
-          };
-   
-          try {
-              const res = await fetch('/salasLabs', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(novaSala)
-              });
-   
-              if (res.ok) {
-                  alert('Sala adicionada com sucesso!');
-                  carregarSalas();
-                  document.getElementById('formSala').reset();
-              } else {
-                  alert('Erro ao adicionar sala');
-              }
-          } catch (error) {
-              console.error('Erro:', error);
-              alert('Erro ao adicionar sala');
-          }
-      });
-   
-      // Fechar formulário de edição
-      document.getElementById('cancelarEditar').addEventListener('click', () => {
-          document.getElementById('relatorioEditar').style.display = 'none';
-          document.body.classList.remove('fundoEscuro');
-      });
-      */
+        if (!data || !horario || !nomeReservante || !window.idSalaSelecionada) {
+            alert('Preencha todos os campos corretamente.');
+            return;
+        }
+
+        const reserva = {
+            nomeReservante,
+            idSala: window.idSalaSelecionada,
+            data,
+            horario
+        };
+
+        try {
+            const res = await fetch('/reservas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(reserva)
+            });
+
+            if (res.ok) {
+                alert('Reserva realizada com sucesso!');
+                document.getElementById('telaReservar').setAttribute('hidden', 'hidden');
+                document.getElementById('overlay').setAttribute('hidden', 'hidden');
+                document.body.classList.remove('no-scroll');
+                e.target.reset();
+                window.idSalaSelecionada = null;
+            } else {
+                const erro = await res.json();
+                alert('Erro ao realizar a reserva: ' + (erro.error || ''));
+            }
+        } catch (error) {
+            console.error('Erro na reserva:', error);
+            alert('Erro ao realizar a reserva');
+        }
+    });
 
     // Carrega as salas ao abrir a página
     await carregarSalas();
