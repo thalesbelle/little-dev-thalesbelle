@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>RoomMates</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 
 <body>
     <header>
+        <img src="./images/configuracoes_branco.png" class="botaoConfiguracoes">
         <div id="sombraCabecalho">
-            <div id="fundoConfig">
-                <img src="./images/configuracoes_branco.png" class="botaoConfiguracoes">
-            </div>
             <img src="/images/logo_SENAI_sistema_reserva.png" id="logoSenai">
             <h3 class="abas" id="textoPgInicial">Página Inicial</h3>
-            <h3 class="abas">Reservas</h3>
+            <h3 class="abas" onclick="window.location.href='reservas.html'">Reservas</h3>
             <h3 class="abas" id="abaCadastro">Cadastro</h3>
 
         </div>
@@ -32,8 +32,36 @@
             <p class="infoReserva"><strong>Andar:</strong> <span id="reserva-andar"></span></p>
             <p class="infoReserva"><strong>Bloco:</strong> <span id="reserva-bloco"></span></p>
             <p class="infoReserva"><strong>Tipo:</strong> <span id="reserva-tipo"></span></p>
-        </div>    
+        </div>
         <div id="linha6"></div>
+        <form id="formReserva">
+
+            <div id="containerDataReserva">
+                <label for="dataReserva" class="labelReserva"><strong>Data da Reserva:</strong></label>
+                <input type="text" id="dataReserva" placeholder="Selecione uma data" required>
+            </div>
+
+            <label for="horario">Escolha o horário:</label>
+            <select id="horario" required>
+                <option value="">-- Selecione o horário --</option>
+                <option value="7:30-8:20">7:30 - 8:20</option>
+                <option value="8:20-9:10">8:20 - 9:10</option>
+                <option value="9:10-10:00">9:10 - 10:00</option>
+                <option value="10:20-11:10">10:20 - 11:10</option>
+                <option value="11:10-12:00">11:10 - 12:00</option>
+                <option value="13:30-14:30">13:30 - 14:30</option>
+                <option value="14:30-15:50">14:30 - 15:50</option>
+                <option value="15:50-17:30">15:50 - 17:30</option>
+                <option value="17:30-19:00">17:30 - 19:00</option>
+                <option value="19:00-20:00">19:00 - 20:00</option>
+                <option value="20:00-21:30">20:00 - 21:30</option>
+            </select>
+
+            <label for="nomeReservante">Nome do Reservante:</label>
+            <input type="text" id="inputReservante" placeholder="Seu nome" required>
+            <button type="submit" class="botaoReservar">Confirmar Reserva</button>
+
+        </form>
     </section>
 
     <h1 class="categoriaSala" id="tituloSalas">SALAS</h1>
@@ -59,8 +87,7 @@
             <h1 id="tituloPaginaConfig" class="tituloPagina">Geral</h1>
 
             <div id="conteudoGeral" class="conteudoAba">
-                <label id="nomeReservante">Nome para reserva</label>
-                <input type="text" id="inputReservante">
+                
             </div>
 
             <div id="conteudoPersonalizacao" class="conteudoAba oculto">
@@ -94,6 +121,7 @@
     </section>
     <div id="overlay" hidden></div>
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </body>
 
 </html>

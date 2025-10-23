@@ -39,23 +39,24 @@ html {
     display: flex;
     position: absolute;
     background-color: rgba(0, 107, 113, 0.301);
-}
-
-#fundoConfig{
-    width: 2vw;
-    border-radius: 1em;
+    z-index: 21;
 }
 
 .botaoConfiguracoes {
     position: absolute;
     right: 2%;
-    top: 35%;
+    top: 2.5%;
     display: flex;
     width: 1.3vw;
     cursor: pointer;
     justify-content: center;
     align-items: center;
     border: none;
+    z-index: 22;
+}
+
+body:not(:has(#overlay[hidden])) .botaoConfiguracoes {
+    z-index: 17;
 }
 
 #fundoConfig:hover {
@@ -84,6 +85,7 @@ html {
     top: 10%;
     left: 3%;
     position: absolute;
+    z-index: 21;
 }
 
 .abas {
@@ -98,6 +100,7 @@ html {
     padding-left: 9.3vw;
     position: relative;
     transform-origin: center center;
+    z-index: 21;
 }
 
 .abas:hover {
@@ -197,7 +200,7 @@ html {
 #telaConfiguracoes:not([hidden]) {
     position: absolute;
     top: 15%;
-    left: 30%;
+    left: 32.5%;
     display: flex;
     flex-direction: column;
     background: white;
@@ -215,7 +218,7 @@ html {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 20;
+    z-index: 18;
 }
 
 .no-scroll {
@@ -380,8 +383,8 @@ html {
 
 #telaCadastro:not([hidden]) {
     position: absolute;
-    top: 10%;
-    left: 30%;
+    top: 15%;
+    left: 32.5%;
     display: flex;
     flex-direction: column;
     background: white;
@@ -454,8 +457,8 @@ html {
 
 #telaReservar:not([hidden]) {
     position: absolute;
-    top: 10%;
-    left: 30%;
+    top: 15%;
+    left: 32.5%;
     display: flex;
     flex-direction: column;
     background: white;
@@ -466,7 +469,7 @@ html {
     border: 1px solid rgba(25, 42, 107);
 }
 
-#fecharReserva{
+#fecharReserva {
     position: relative;
     margin-left: 5%;
     transition: all 0.3s ease-in-out;
@@ -478,8 +481,8 @@ html {
     transition: all 0.3s ease-in-out;
 }
 
-.containerReserva{
-    background-color: rgba(25, 42, 107);  
+.containerReserva {
+    background-color: rgba(25, 42, 107);
     position: absolute;
     width: 35vw;
     top: 15%;
@@ -491,7 +494,7 @@ html {
     gap: 3em;
 }
 
-#tituloSalaReserva{
+#tituloSalaReserva {
     position: absolute;
     top: 0%;
     left: 40%;
@@ -500,14 +503,14 @@ html {
     color: rgba(25, 42, 107);
 }
 
-.infoReserva{
+.infoReserva {
     font-size: 20px;
     color: white;
     font-family: 'Open Sans';
     font-weight: 330;
 }
 
-#linha5{
+#linha5 {
     background-color: rgba(25, 42, 107);
     position: absolute;
     top: 15%;
@@ -516,11 +519,108 @@ html {
     height: 0.1vh;
 }
 
-#linha6{
+#linha6 {
     background-color: rgba(25, 42, 107);
     position: absolute;
     top: 25%;
     left: 0%;
     width: 100%;
-    height: 0.1vh; 
+    height: 0.1vh;
+}
+
+/*========================*Calendário de Reserva*===========================*/
+#containerDataReserva {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    font-family: 'Open Sans';
+    color: rgba(25, 42, 107);
+}
+
+#dataReserva {
+    border: 1px solid rgba(25, 42, 107, 0.6);
+    font-family: 'Open Sans';
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    font-size: 15px;
+    text-align: center;
+    width: 12em;
+    box-shadow: 0 0 4px rgba(25, 42, 107, 0.5);
+}
+
+#dataReserva:focus {
+    font-family: 'Open Sans';
+    outline: none;
+    box-shadow: 0 0 6px rgba(25, 42, 107, 0.8);
+}
+
+.flatpickr-calendar {
+    font-family: 'Open Sans';
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected:hover {
+    background: rgba(25, 42, 107) !important;
+    color: white !important;
+}
+
+.flatpickr-day:hover {
+    background: rgba(25, 42, 107) !important;
+    color: white !important;
+}
+
+/*========================*Horário de Reserva*===========================*/
+
+label[for="horario"] {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    color: #192a6b;
+    font-family: 'Open Sans';
+    position: absolute;
+    left: 40%;
+    top: 45%;
+    font-weight: bold;
+}
+
+#horario {
+    width: 11vw;
+    padding: 8px 12px;
+    font-family: 'Open Sans';
+    font-size: 1rem;
+    color: #192a6b;
+    background-color: white;
+    box-shadow: 0 0 4px rgba(25, 42, 107, 0.5);
+    border: 1px solid rgba(25, 42, 107, 0.6);
+    border-radius: 0.5em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    outline: none;
+    position: absolute;
+    left: 34.5%;
+    top: 50%;
+}
+
+#horario:hover,
+#horario:focus {
+    background-color: rgba(25, 42, 107);
+    color: white;
+    border-color: rgba(25, 42, 107);
+}
+
+#horario option {
+    color: rgba(25, 42, 107);
+    background-color: white;
+}
+
+#horario option:hover {
+    background-color: rgba(25, 42, 107, 0.8);
+    color: white;
 }
