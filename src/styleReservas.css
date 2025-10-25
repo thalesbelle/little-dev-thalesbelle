@@ -87,3 +87,14 @@ h1 {
     cursor: pointer;
     transform: scale(1.2);
 }
+
+.icones {
+    width: 2vw;
+    cursor: pointer;
+}
+
+#baixarRelatorio{
+    position: absolute;
+    top: 25%;
+    left: 55%;
+}
