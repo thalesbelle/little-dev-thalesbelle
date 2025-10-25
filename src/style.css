@@ -528,6 +528,56 @@ body:not(:has(#overlay[hidden])) .botaoConfiguracoes {
     height: 0.1vh;
 }
 
+#nomeReservante{
+    color: rgba(25, 42, 107);
+    font-weight: bold;
+    font-family: 'Open Sans';
+    position: absolute;
+    top: 45%;
+    left: 38%;
+}
+
+
+#inputReservante{
+    position: absolute;
+    top: 30%;
+    left: 35%;
+    width: 10.5vw;
+}
+
+.botaoReservar:not([hidden]) {
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 6vw;
+    height: 4vh;
+    position: absolute;
+    top: 80%;
+    left: 42.5%;
+    padding-left: 33px;
+    padding-right: 33px;
+    padding-bottom: 16px;
+    padding-top: 16px;
+    border-radius: 9px;
+    background: rgba(25, 42, 107);
+    border: none;
+    font-weight: bold;
+    font-family: 'Open Sans';
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.botaoReservar:hover {
+    box-shadow: 7px 5px 56px -5px rgb(57, 80, 173);
+}
+
+.botaoReservar:active {
+    transform: scale(0.97);
+    box-shadow: 7px 5px 56px -10px rgb(57, 80, 173);
+}
+
 /*========================*Calendário de Reserva*===========================*/
 #containerDataReserva {
     position: absolute;
