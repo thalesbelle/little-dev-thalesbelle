@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="reservasTitulo">Reservas - RoomMates</title>
+    <link rel="stylesheet" href="styleReservas.css">
+</head>
+
+<body>
+    <div id="cabecalho">
+        <h1 data-i18n="reservas">Reservas</h1>
+        <img src="./images/seta-voltar.png" id="voltarPaginaInicial">
+        <div id="fundoDownload" onclick="window.open('/relatorio-reservas')">
+            <img src="./images/download-azul.png" class="icones" id="baixarRelatorio" title="Baixar relatório">
+            <p id="downloadEscrita">Download</p>
+        </div>    
+    </div>
+
+    <div id="listaReservas"></div>
+    <script src="scriptReservas.js"></script>
+</body>
+
+</html>

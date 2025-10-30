@@ -1,0 +1,18 @@
+{
+    "home": "Home",
+    "bookings": "Bookings",
+    "register": "Register",
+    "rooms": "Rooms",
+    "capacity": "Capacity",
+    "floor": "Floor",
+    "block": "Block",
+    "type": "Type",
+    "book": "Book",
+    "reservationDate": "Reservation Date",
+    "selectDate": "Select a date",
+    "chooseTime": "Choose a time",
+    "selectTime": "Select a time",
+    "bookerName": "Booker's Name",
+    "yourName": "Your name",
+    "confirm": "Confirm"
+  }

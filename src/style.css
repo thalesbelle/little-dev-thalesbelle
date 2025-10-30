@@ -1,0 +1,703 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rodarEngrenagem {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+body,
+html {
+    margin: 0;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 0%;
+}
+
+#cabecalhoImagem {
+    width: 99vw;
+    height: 40vh;
+}
+
+#sombraCabecalho {
+    width: 99vw;
+    height: 8vh;
+    display: flex;
+    position: absolute;
+    background-color: rgba(0, 107, 113, 0.301);
+    z-index: 21;
+}
+
+.botaoConfiguracoes {
+    position: absolute;
+    right: 2%;
+    top: 2.5%;
+    display: flex;
+    width: 1.3vw;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    z-index: 22;
+}
+
+body:not(:has(#overlay[hidden])) .botaoConfiguracoes {
+    z-index: 17;
+}
+
+#fundoConfig:hover {
+    background: rgba(148, 148, 148, 0.582);
+    cursor: pointer;
+}
+
+.configuracoesEscrita {
+    line-height: 20px;
+    font-size: 13px;
+    position: absolute;
+    right: 3%;
+    color: rgba(25, 42, 107);
+    font-family: 'Open Sans';
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.iconeConfig {
+    position: absolute;
+    right: 80%;
+}
+
+#logoSenai {
+    width: 12vw;
+    top: 10%;
+    left: 3%;
+    position: absolute;
+    z-index: 21;
+}
+
+.abas {
+    font-family: 'Open Sans';
+    font-size: 15px;
+    box-sizing: border-box;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 9.3vw;
+    position: relative;
+    transform-origin: center center;
+    z-index: 21;
+}
+
+.abas:hover {
+    color: rgba(0, 224, 236);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#textoPgInicial {
+    margin-left: 25vw;
+}
+
+.divSalas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+    width: 90%;
+    margin: 6.5em auto 0 auto;
+    border-radius: 2em;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.formulario {
+    color: rgba(25, 42, 107);
+    font-size: 16px;
+    font-family: 'Open Sans';
+    font-weight: bolder;
+    margin: 0;
+    box-sizing: border-box;
+    width: calc(33.333% - 13.333px);
+    display: flex;
+    flex-direction: column;
+    padding: 0.8vh;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.nomeSala {
+    font-size: 30px;
+}
+
+.categoriaSala {
+    color: rgba(25, 42, 107);
+    font-weight: bold;
+    font-size: 16px;
+    font-family: 'Open Sans';
+    margin: 0%;
+}
+
+#tituloSalas {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+}
+
+.containerSalas {
+    width: 100%;
+    border-bottom: rgba(25, 42, 107) 1px;
+    padding: 20px 0;
+}
+
+.reservaBotao:not([hidden]) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    position: relative;
+    margin-left: 75%;
+    color: white;
+    width: 6vw;
+    height: 4vh;
+    padding-left: 33px;
+    padding-right: 33px;
+    padding-bottom: 16px;
+    padding-top: 16px;
+    border-radius: 9px;
+    background: rgba(25, 42, 107);
+    border: none;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.reservaBotao:hover {
+    box-shadow: 7px 5px 56px -5px rgb(57, 80, 173);
+}
+
+.reservaBotao:active {
+    transform: scale(0.97);
+    box-shadow: 7px 5px 56px -10px rgb(57, 80, 173);
+}
+
+#telaConfiguracoes:not([hidden]) {
+    position: absolute;
+    top: 15%;
+    left: 32.5%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    width: 35vw;
+    height: 70vh;
+    border-radius: 2em;
+    z-index: 21;
+    border: 1px solid rgba(25, 42, 107);
+}
+
+#overlay:not([hidden]) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 18;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+.abasConfig {
+    font-weight: bold;
+    font-size: 17px;
+    font-family: 'Open Sans';
+    color: rgba(25, 42, 107);
+    gap: 5%;
+    cursor: pointer;
+}
+
+#divAbasConfiguracoes {
+    width: 50%;
+    height: 50%;
+    margin-top: 3%;
+    margin-left: 5%;
+}
+
+.divAbaIndividual {
+    display: flex;
+    align-items: center;
+    gap: 5%;
+    width: 10vw;
+    height: 5vh;
+    border-radius: 0.7em;
+    margin-bottom: 5%;
+    cursor: pointer;
+    background-color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+.divAbaIndividual:hover {
+    background-color: rgba(213, 213, 213, 0.300);
+}
+
+.abaAtiva {
+    background-color: rgba(213, 213, 213, 0.600);
+}
+
+.conteudoAba {
+    position: absolute;
+    left: 45%;
+    top: 5%;
+    width: 45%;
+    color: rgba(25, 42, 107);
+    font-family: 'Open Sans';
+}
+
+.textoConfig {
+    margin-top: 5%;
+    font-size: 15px;
+}
+
+.oculto {
+    display: none;
+}
+
+.icones {
+    width: 1vw;
+    cursor: pointer;
+}
+
+#fecharConfigs {
+    position: relative;
+    margin-left: 5%;
+    transition: all 0.3s ease-in-out;
+    margin-top: 5%;
+
+}
+
+#fecharConfigs:hover {
+    transform: scale(1.2);
+    transition: all 0.3s ease-in-out;
+}
+
+.girarEngrenagem {
+    animation: rodarEngrenagem 2s linear infinite;
+}
+
+.tituloPagina {
+    position: absolute;
+    left: 42%;
+    top: 0%;
+    color: rgba(25, 42, 107);
+    font-family: 'Open Sans';
+    font-weight: bold;
+    font-size: 27px;
+}
+
+#linha1 {
+    background-color: rgba(25, 42, 107);
+    position: absolute;
+    top: 50%;
+    left: -10%;
+    height: 0.08vh;
+    width: 98.5%;
+    transform: rotate(90deg);
+}
+
+.linha2 {
+    background-color: rgba(25, 42, 107);
+    position: absolute;
+    top: 12%;
+    left: 42%;
+    width: 55%;
+    height: 0.1vh;
+}
+
+#inputReservante {
+    position: absolute;
+    left: 58%;
+    margin-top: 40%;
+    border: 0;
+    border-bottom: 1px solid rgba(25, 42, 107);
+    box-shadow: 0 0 4px rgba(25, 42, 107, 0.5);
+}
+
+#inputReservante:focus {
+    outline: none;
+}
+
+#nomeReservante {
+    position: absolute;
+    left: -6%;
+    margin-top: 7.2em;
+}
+
+#formularioSala {
+    position: absolute;
+    top: 17%;
+    left: 34%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.camposFormulario {
+    display: flex;
+    flex-direction: row;
+    font-size: 25px;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    color: rgba(25, 42, 107);
+    gap: 10rem !important;
+}
+
+.inputSala {
+    border: 0;
+    border-bottom: 1px solid rgba(25, 42, 107);
+    box-shadow: 0 0 4px rgba(25, 42, 107, 0.5);
+}
+
+.inputSala:focus {
+    outline: none;
+}
+
+/*========================*Cadastro*===========================*/
+
+#telaCadastro:not([hidden]) {
+    position: absolute;
+    top: 15%;
+    left: 32.5%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    width: 35vw;
+    height: 70vh;
+    border-radius: 2em;
+    z-index: 21;
+    border: 1px solid rgba(25, 42, 107);
+}
+
+#tituloCadastro {
+    position: absolute;
+    left: 33%;
+    top: 1%;
+    color: rgba(25, 42, 107);
+    font-family: 'Open Sans';
+    font-weight: bold;
+    font-size: 27px;
+}
+
+#fecharCadastro {
+    position: relative;
+    margin-left: 5%;
+    transition: all 0.3s ease-in-out;
+    margin-top: 5%;
+}
+
+.botaoCadastrar {
+    font-family: 'Open Sans';
+    color: rgba(25, 42, 107);
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    top: 90%;
+    left: 38%;
+    width: 8vw;
+    height: 4vh;
+    cursor: pointer;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgb(25, 41, 107);
+    border: 0;
+    border-radius: 1em;
+    transition: all 0.4s ease-in-out;
+}
+
+.botaoCadastrar:hover {
+    transform: scale(1.03);
+}
+
+.linha3 {
+    background-color: rgba(25, 42, 107);
+    position: absolute;
+    top: 12%;
+    left: 10%;
+    width: 80%;
+    height: 0.1vh;
+}
+
+
+.linha4 {
+    background-color: rgba(25, 42, 107);
+    position: absolute;
+    top: 85%;
+    left: 10%;
+    width: 80%;
+    height: 0.1vh;
+}
+
+/*========================*Reserva*===========================*/
+
+#telaReservar:not([hidden]) {
+    position: absolute;
+    top: 15%;
+    left: 32.5%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    width: 35vw;
+    height: 70vh;
+    border-radius: 2em;
+    z-index: 21;
+    border: 1px solid rgba(25, 42, 107);
+}
+
+#fecharReserva {
+    position: relative;
+    margin-left: 5%;
+    transition: all 0.3s ease-in-out;
+    margin-top: 5%;
+}
+
+#fecharReserva:hover {
+    transform: scale(1.2);
+    transition: all 0.3s ease-in-out;
+}
+
+.containerReserva {
+    background-color: rgba(25, 42, 107);
+    position: absolute;
+    width: 35vw;
+    top: 15%;
+    left: 0%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 3em;
+}
+
+#tituloSalaReserva {
+    position: absolute;
+    top: 0%;
+    left: 40%;
+    font-family: 'Open Sans';
+    font-weight: bolder;
+    color: rgba(25, 42, 107);
+}
+
+.infoReserva {
+    font-size: 20px;
+    color: white;
+    font-family: 'Open Sans';
+    font-weight: 330;
+}
+
+#linha5 {
+    background-color: rgba(25, 42, 107);
+    position: absolute;
+    top: 15%;
+    left: 0%;
+    width: 100%;
+    height: 0.1vh;
+}
+
+#linha6 {
+    background-color: rgba(25, 42, 107);
+    position: absolute;
+    top: 25%;
+    left: 0%;
+    width: 100%;
+    height: 0.1vh;
+}
+
+#nomeReservante {
+    color: rgba(25, 42, 107);
+    font-weight: bold;
+    font-family: 'Open Sans';
+    position: absolute;
+    top: 45%;
+    left: 38%;
+}
+
+
+#inputReservante {
+    position: absolute;
+    top: 30%;
+    left: 35%;
+    width: 10.5vw;
+}
+
+.botaoReservar:not([hidden]) {
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 6vw;
+    height: 4vh;
+    position: absolute;
+    top: 80%;
+    left: 42.5%;
+    padding-left: 33px;
+    padding-right: 33px;
+    padding-bottom: 16px;
+    padding-top: 16px;
+    border-radius: 9px;
+    background: rgba(25, 42, 107);
+    border: none;
+    font-weight: bold;
+    font-family: 'Open Sans';
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.botaoReservar:hover {
+    box-shadow: 7px 5px 56px -5px rgb(57, 80, 173);
+}
+
+.botaoReservar:active {
+    transform: scale(0.97);
+    box-shadow: 7px 5px 56px -10px rgb(57, 80, 173);
+}
+
+/*========================*Calendário de Reserva*===========================*/
+#containerDataReserva {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    font-family: 'Open Sans';
+    color: rgba(25, 42, 107);
+}
+
+#dataReserva {
+    border: 1px solid rgba(25, 42, 107, 0.6);
+    font-family: 'Open Sans';
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    font-size: 15px;
+    text-align: center;
+    width: 12em;
+    box-shadow: 0 0 4px rgba(25, 42, 107, 0.5);
+}
+
+#dataReserva:focus {
+    font-family: 'Open Sans';
+    outline: none;
+    box-shadow: 0 0 6px rgba(25, 42, 107, 0.8);
+}
+
+.flatpickr-calendar {
+    font-family: 'Open Sans';
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected:hover {
+    background: rgba(25, 42, 107) !important;
+    color: white !important;
+}
+
+.flatpickr-day:hover {
+    background: rgba(25, 42, 107) !important;
+    color: white !important;
+}
+
+/*========================*Horário de Reserva*===========================*/
+
+label[for="horario"] {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    color: #192a6b;
+    font-family: 'Open Sans';
+    position: absolute;
+    left: 40%;
+    top: 45%;
+    font-weight: bold;
+}
+
+#horario {
+    width: 11vw;
+    padding: 8px 12px;
+    font-family: 'Open Sans';
+    font-size: 1rem;
+    color: #192a6b;
+    background-color: white;
+    box-shadow: 0 0 4px rgba(25, 42, 107, 0.5);
+    border: 1px solid rgba(25, 42, 107, 0.6);
+    border-radius: 0.5em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    outline: none;
+    position: absolute;
+    left: 34.5%;
+    top: 50%;
+}
+
+#horario:hover,
+#horario:focus {
+    background-color: rgba(25, 42, 107);
+    color: white;
+    border-color: rgba(25, 42, 107);
+}
+
+#horario option {
+    color: rgba(25, 42, 107);
+    background-color: white;
+}
+
+#horario option:hover {
+    background-color: rgba(25, 42, 107, 0.8);
+    color: white;
+}
+
+/*========================*Configurações*===========================*/
+
+#labelIdioma{
+    font-family: 'Open Sans';
+    color: rgba(25, 42, 107);
+    font-weight: bold;
+    position: absolute;
+    top: 20%;
+    left: 42%;
+}
+
+#idioma{
+    border-bottom: 1px solid rgba(25, 42, 107);
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    position: absolute;
+    left: 85%;
+    top: 20%;
+}
+
+#opcaoIdioma{
+    position: absolute;
+    left: 60%;
+}
