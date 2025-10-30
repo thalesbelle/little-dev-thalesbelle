@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, 'src')));
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: '01011976',
+    password: '123456',
     database: 'reservaSalas',
     waitForConnections: true,
     connectionLimit: 10,
@@ -110,7 +110,6 @@ app.get("/relatorio-reservas", async (req, res) => {
         const writeStream = fs.createWriteStream(filePath);
         doc.pipe(writeStream);
 
-        // --- Cabeçalho ---
         doc
             .fillColor("#003366")
             .fontSize(24)
@@ -123,12 +122,10 @@ app.get("/relatorio-reservas", async (req, res) => {
             .text(`Data de geração: ${new Date().toLocaleString()}`, { align: "center" })
             .moveDown(1);
 
-        // --- Tabela ---
         const tableTop = doc.y;
         const itemHeight = 20;
-        const columnWidths = [50, 150, 50, 100, 100, 80]; // ajuste das colunas
+        const columnWidths = [50, 150, 50, 100, 100, 80];
 
-        // Cabeçalho da tabela
         const headers = ["ID", "Reservante", "Sala", "Início", "Fim", "Status"];
         doc.fillColor("#FFFFFF").font("Helvetica-Bold").fontSize(12);
 
@@ -142,13 +139,12 @@ app.get("/relatorio-reservas", async (req, res) => {
             x += columnWidths[i];
         });
 
-        // Linhas da tabela
         let y = tableTop + itemHeight;
         doc.font("Helvetica").fontSize(11).fillColor("#000000");
 
         rows.forEach((r, index) => {
             x = 40;
-            const rowColor = index % 2 === 0 ? "#f2f2f2" : "#ffffff"; // linhas alternadas
+            const rowColor = index % 2 === 0 ? "#f2f2f2" : "#ffffff";
             headers.forEach((col, i) => {
                 let text = "";
                 switch (i) {
@@ -166,7 +162,6 @@ app.get("/relatorio-reservas", async (req, res) => {
             y += itemHeight;
         });
 
-        // --- Rodapé ---
         doc
             .fontSize(10)
             .fillColor("#666666")
@@ -184,6 +179,32 @@ app.get("/relatorio-reservas", async (req, res) => {
     } catch (error) {
         console.error("Erro ao gerar PDF:", error);
         res.status(500).send("Erro ao gerar relatório em PDF");
+    }
+});
+
+app.get('/reservas/ocupadas/:idSala/:data', async (req, res) => {
+    try {
+        const { idSala, data } = req.params;
+        const [dia, mes, ano] = data.split('-');
+        const dataISO = `${ano}-${mes}-${dia}`;
+
+        const sql = `
+        SELECT dataInicio, dataFim FROM reservas
+        WHERE idSala = ? AND reservaStatus = 'ativa'
+        AND DATE(dataInicio) = ?
+      `;
+        const [rows] = await pool.query(sql, [idSala, dataISO]);
+
+        const horariosOcupados = rows.map(r => {
+            const horaInicio = new Date(r.dataInicio).toTimeString().slice(0, 5);
+            const horaFim = new Date(r.dataFim).toTimeString().slice(0, 5);
+            return `${horaInicio}-${horaFim}`;
+        });
+
+        res.json(horariosOcupados);
+    } catch (err) {
+        console.error('Erro ao buscar horários ocupados:', err);
+        res.status(500).json({ error: 'Erro interno do servidor' });
     }
 });
 

@@ -1,0 +1,18 @@
+{
+    "home": "Início",
+    "bookings": "Reservas",
+    "register": "Cadastro",
+    "rooms": "Salas",
+    "capacity": "Capacidade",
+    "floor": "Andar",
+    "block": "Bloco",
+    "type": "Tipo",
+    "book": "Reservar",
+    "reservationDate": "Data da Reserva",
+    "selectDate": "Selecione uma data",
+    "chooseTime": "Escolha o horário",
+    "selectTime": "Selecione o horário",
+    "bookerName": "Nome do Reservante",
+    "yourName": "Seu nome",
+    "confirm": "Confirmar"
+  }

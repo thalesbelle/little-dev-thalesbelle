@@ -184,6 +184,7 @@ body:not(:has(#overlay[hidden])) .botaoConfiguracoes {
     background: rgba(25, 42, 107);
     border: none;
     font-family: 'Open Sans';
+    font-weight: bold;
     cursor: pointer;
     transition: 0.4s;
 }
@@ -316,9 +317,9 @@ body:not(:has(#overlay[hidden])) .botaoConfiguracoes {
     background-color: rgba(25, 42, 107);
     position: absolute;
     top: 50%;
-    left: -20%;
+    left: -10%;
     height: 0.08vh;
-    width: 112.5%;
+    width: 98.5%;
     transform: rotate(90deg);
 }
 
@@ -528,7 +529,7 @@ body:not(:has(#overlay[hidden])) .botaoConfiguracoes {
     height: 0.1vh;
 }
 
-#nomeReservante{
+#nomeReservante {
     color: rgba(25, 42, 107);
     font-weight: bold;
     font-family: 'Open Sans';
@@ -538,7 +539,7 @@ body:not(:has(#overlay[hidden])) .botaoConfiguracoes {
 }
 
 
-#inputReservante{
+#inputReservante {
     position: absolute;
     top: 30%;
     left: 35%;
@@ -673,4 +674,30 @@ label[for="horario"] {
 #horario option:hover {
     background-color: rgba(25, 42, 107, 0.8);
     color: white;
+}
+
+/*========================*Configurações*===========================*/
+
+#labelIdioma{
+    font-family: 'Open Sans';
+    color: rgba(25, 42, 107);
+    font-weight: bold;
+    position: absolute;
+    top: 20%;
+    left: 42%;
+}
+
+#idioma{
+    border-bottom: 1px solid rgba(25, 42, 107);
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    position: absolute;
+    left: 85%;
+    top: 20%;
+}
+
+#opcaoIdioma{
+    position: absolute;
+    left: 60%;
 }

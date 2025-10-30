@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <title>RoomMates</title>
+    <title data-i18n="title">RoomMates</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
@@ -15,10 +15,9 @@
         <img src="./images/configuracoes_branco.png" class="botaoConfiguracoes">
         <div id="sombraCabecalho">
             <img src="/images/logo_SENAI_sistema_reserva.png" id="logoSenai">
-            <h3 class="abas" id="textoPgInicial">Página Inicial</h3>
-            <h3 class="abas" onclick="window.location.href='reservas.html'">Reservas</h3>
-            <h3 class="abas" id="abaCadastro">Cadastro</h3>
-
+            <h3 class="abas" id="textoPgInicial" data-i18n="paginaInicial">Página Inicial</h3>
+            <h3 class="abas" onclick="window.location.href='reservas.html'" data-i18n="reservas">Reservas</h3>
+            <h3 class="abas" id="abaCadastro" data-i18n="cadastro">Cadastro</h3>
         </div>
         <img src="/images/sala futurista cabeçalho do site.png" id="cabecalhoImagem">
     </header>
@@ -28,22 +27,22 @@
         <div id="linha5"></div>
         <h1 id="tituloSalaReserva"></h1>
         <div class="containerReserva">
-            <p class="infoReserva"><strong>Capacidade:</strong> <span id="reserva-capacidade"></span></p>
-            <p class="infoReserva"><strong>Andar:</strong> <span id="reserva-andar"></span></p>
-            <p class="infoReserva"><strong>Bloco:</strong> <span id="reserva-bloco"></span></p>
-            <p class="infoReserva"><strong>Tipo:</strong> <span id="reserva-tipo"></span></p>
+            <p class="infoReserva"><strong data-i18n="capacidade">Capacidade:</strong> <span
+                    id="reserva-capacidade"></span></p>
+            <p class="infoReserva"><strong data-i18n="andar">Andar:</strong> <span id="reserva-andar"></span></p>
+            <p class="infoReserva"><strong data-i18n="bloco">Bloco:</strong> <span id="reserva-bloco"></span></p>
+            <p class="infoReserva"><strong data-i18n="tipo">Tipo:</strong> <span id="reserva-tipo"></span></p>
         </div>
         <div id="linha6"></div>
         <form id="formReserva">
-
             <div id="containerDataReserva">
-                <label for="dataReserva" class="labelReserva"><strong>Data da Reserva:</strong></label>
+                <label for="dataReserva" class="labelReserva" data-i18n="dataReserva">Data da Reserva:</label>
                 <input type="text" id="dataReserva" placeholder="Selecione uma data" required>
             </div>
 
-            <label for="horario">Escolha o horário:</label>
+            <label for="horario" data-i18n="escolhaHorario">Escolha o horário:</label>
             <select id="horario" required>
-                <option value="">-- Selecione o horário --</option>
+                <option value="">-- <span data-i18n="selecioneHorario">Selecione o horário</span> --</option>
                 <option value="7:30-8:20">7:30 - 8:20</option>
                 <option value="8:20-9:10">8:20 - 9:10</option>
                 <option value="9:10-10:00">9:10 - 10:00</option>
@@ -57,68 +56,67 @@
                 <option value="20:00-21:30">20:00 - 21:30</option>
             </select>
 
-            <label for="nomeReservante" id="nomeReservante">Nome do Reservante:</label>
+            <label for="nomeReservante" id="nomeReservante" data-i18n="nomeReservante">Nome do Reservante:</label>
             <input type="text" id="inputReservante" placeholder="Seu nome" required>
-            <button type="submit" class="botaoReservar">Confirmar</button>
-
+            <button type="submit" class="botaoReservar" data-i18n="confirmar">Confirmar</button>
         </form>
     </section>
 
-    <h1 class="categoriaSala" id="tituloSalas">SALAS</h1>
+    <h1 class="categoriaSala" id="tituloSalas" data-i18n="salas">SALAS</h1>
+
     <section id="telaConfiguracoes" hidden>
         <img src="./images/seta-voltar.png" class="icones" id="fecharConfigs">
 
         <div id="divAbasConfiguracoes">
             <div id="abaGeral" class="divAbaIndividual abaAtiva">
                 <img src="./images/configuracoes.png" class="icones" id="engrenagemGeral">
-                <h2 class="abasConfig">Geral</h2>
+                <h2 class="abasConfig" data-i18n="geral">Geral</h2>
+                <label data-i18n="idioma" id="labelIdioma">Idioma</label>
+                <select id="idioma">
+                    <option value="pt">Português</option>
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                </select>
             </div>
 
             <div id="abaPersonalizacao" class="divAbaIndividual">
                 <img src="./images/lapis.png" class="icones">
-                <h2 class="abasConfig">Personalização</h2>
+                <h2 class="abasConfig" data-i18n="personalizacao">Personalização</h2>
             </div>
         </div>
 
         <div id="linha1"></div>
-
         <div class="conteudoAbas">
             <div class="linha2"></div>
-            <h1 id="tituloPaginaConfig" class="tituloPagina">Geral</h1>
-
-            <div id="conteudoGeral" class="conteudoAba">
-                
-            </div>
-
-            <div id="conteudoPersonalizacao" class="conteudoAba oculto">
-            </div>
+            <h1 id="tituloPaginaConfig" class="tituloPagina" data-i18n="geral">Geral</h1>
+            <div id="conteudoGeral" class="conteudoAba"></div>
+            <div id="conteudoPersonalizacao" class="conteudoAba oculto"></div>
     </section>
+
     <section id="telaCadastro" hidden>
         <img src="./images/seta-voltar.png" class="icones" id="fecharCadastro">
-        <h1 id="tituloCadastro">Cadastro de sala</h1>
+        <h1 id="tituloCadastro" data-i18n="cadastroSala">Cadastro de sala</h1>
         <div class="linha3"></div>
         <div id="formularioSala">
-            <label class="camposFormulario">Número da sala:</label>
+            <label class="camposFormulario" data-i18n="numeroSala">Número da sala:</label>
             <input type="text" class="inputSala" id="numero">
-
-            <label class="camposFormulario">Capacidade:</label>
+            <label class="camposFormulario" data-i18n="capacidade">Capacidade:</label>
             <input type="text" class="inputSala" id="capacidade">
-
-            <label class="camposFormulario">Andar:</label>
+            <label class="camposFormulario" data-i18n="andar">Andar:</label>
             <input type="text" class="inputSala" id="andar">
-
-            <label class="camposFormulario">Bloco:</label>
+            <label class="camposFormulario" data-i18n="bloco">Bloco:</label>
             <input type="text" class="inputSala" id="bloco">
-
-            <label class="camposFormulario">Tipo:</label>
+            <label class="camposFormulario" data-i18n="tipo">Tipo:</label>
             <input type="text" class="inputSala" id="tipo">
         </div>
         <div class="linha4"></div>
-        <button class="botaoCadastrar">Cadastrar</button>
+        <button class="botaoCadastrar" data-i18n="cadastrar">Cadastrar</button>
     </section>
+
     <section class="containerSalas">
         <div id="listaSalas" class="divSalas"></div>
     </section>
+
     <div id="overlay" hidden></div>
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
