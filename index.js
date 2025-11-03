@@ -120,8 +120,7 @@ app.get("/relatorio-reservas", async (req, res) => {
       const filePath = path.join(process.cwd(), "relatorio_reservas.pdf");
       const writeStream = fs.createWriteStream(filePath);
       doc.pipe(writeStream);
-  
-      // Cabeçalho
+
       doc
         .fillColor("#003366")
         .fontSize(24)
@@ -135,8 +134,7 @@ app.get("/relatorio-reservas", async (req, res) => {
           align: "center",
         })
         .moveDown(1);
-  
-      // Config da tabela
+
       const tableTop = doc.y;
       const itemHeight = 35;
       const columnWidths = [50, 150, 50, 130, 130, 80];
@@ -149,8 +147,7 @@ app.get("/relatorio-reservas", async (req, res) => {
   
       const headers = ["ID", "Reservante", "Sala", "Início", "Fim", "Status"];
       doc.fillColor("#FFFFFF").font("Helvetica-Bold").fontSize(12);
-  
-      // Cabeçalhos
+
       let x = tableX;
       headers.forEach((header, i) => {
         doc
@@ -163,8 +160,7 @@ app.get("/relatorio-reservas", async (req, res) => {
           });
         x += columnWidths[i];
       });
-  
-      // Linhas da tabela
+
       let y = tableTop + itemHeight;
       doc.font("Helvetica").fontSize(11).fillColor("#000000");
   
@@ -190,24 +186,21 @@ app.get("/relatorio-reservas", async (req, res) => {
         });
   
         y += itemHeight;
-  
-        // Quebra automática de página
+
         if (y > 750) {
           doc.addPage();
           y = 60;
         }
       });
-  
-      // Linha separadora opcional
+
       doc
         .moveTo(tableX, y + 10)
         .lineTo(tableX + totalTableWidth, y + 10)
         .strokeColor("#999999")
         .lineWidth(0.5)
         .stroke();
-  
-      // Rodapé
-      y += 25; // espaço abaixo da tabela
+
+      y += 25; 
       doc
         .fontSize(10)
         .fillColor("#666666")
@@ -215,8 +208,7 @@ app.get("/relatorio-reservas", async (req, res) => {
           width: totalTableWidth,
           align: "center",
         });
-  
-      // Finaliza PDF
+
       doc.end();
   
       writeStream.on("finish", () => {
