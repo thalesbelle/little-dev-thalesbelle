@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt" data-tema="azul">
 
 <head>
     <meta charset="UTF-8">
@@ -71,12 +71,6 @@
             <div id="abaGeral" class="divAbaIndividual abaAtiva">
                 <img src="./images/configuracoes.png" class="icones" id="engrenagemGeral">
                 <h2 class="abasConfig" data-i18n="geral">Geral</h2>
-                <label data-i18n="idioma" id="labelIdioma">Idioma</label>
-                <select id="idioma">
-                    <option value="pt">Português</option>
-                    <option value="en">English</option>
-                    <option value="es">Español</option>
-                </select>
             </div>
 
             <div id="abaPersonalizacao" class="divAbaIndividual">
@@ -89,10 +83,35 @@
         <div class="conteudoAbas">
             <div class="linha2"></div>
             <h1 id="tituloPaginaConfig" class="tituloPagina" data-i18n="geral">Geral</h1>
-            <div id="conteudoGeral" class="conteudoAba"></div>
-            <div id="conteudoPersonalizacao" class="conteudoAba oculto"></div>
+
+            <!-- CONTEÚDO DA ABA GERAL -->
+            <div id="conteudoGeral" class="conteudoAba">
+                <div class="idiomaLinha">
+                    <label data-i18n="idioma" class="labelIdioma">Idioma</label>
+                    <select id="idioma">
+                        <option value="pt">Português</option>
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="conteudoPersonalizacao" class="conteudoAba oculto">
+                <div class="personalizacaoLinha">
+                    <label class="labelIdioma">Cor destaque</label>
+                    <select id="selecaoCor">
+                        <option value="azul">Azul (padrão)</option>
+                        <option value="ciano">Ciano</option>
+                        <option value="azul-claro">Azul Claro</option>
+                        <option value="verde">Verde</option>
+                        <option value="roxo">Roxo</option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </section>
 
+    <!-- TELA DE CADASTRO -->
     <section id="telaCadastro" hidden>
         <img src="./images/seta-voltar.png" class="icones" id="fecharCadastro">
         <h1 id="tituloCadastro" data-i18n="cadastroSala">Cadastro de sala</h1>
@@ -113,11 +132,13 @@
         <button class="botaoCadastrar" data-i18n="cadastrar">Cadastrar</button>
     </section>
 
+    <!-- LISTA DE SALAS -->
     <section class="containerSalas">
         <div id="listaSalas" class="divSalas"></div>
     </section>
 
     <div id="overlay" hidden></div>
+
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </body>
