@@ -107,121 +107,122 @@ app.post("/reservas", async (req, res) => {
 });
 
 app.get("/relatorio-reservas", async (req, res) => {
-    try {
-      const [rows] = await pool.query(`
+  try {
+    const [rows] = await pool.query(`
         SELECT idreserva, nomeReservante, idSala, dataInicio, dataFim, reservaStatus
         FROM reservas
       `);
-  
-      if (rows.length === 0)
-        return res.status(404).send("Nenhuma reserva encontrada.");
-  
-      const doc = new PDFDocument({ margin: 40, size: "A4" });
-      const filePath = path.join(process.cwd(), "relatorio_reservas.pdf");
-      const writeStream = fs.createWriteStream(filePath);
-      doc.pipe(writeStream);
 
+    if (rows.length === 0)
+      return res.status(404).send("Nenhuma reserva encontrada.");
+
+    const doc = new PDFDocument({ margin: 40, size: "A4" });
+    const filePath = path.join(process.cwd(), "relatorio_reservas.pdf");
+    const writeStream = fs.createWriteStream(filePath);
+    doc.pipe(writeStream);
+
+    doc
+      .fillColor("#003366")
+      .fontSize(24)
+      .text("Relatório de Reservas", { align: "center" })
+      .moveDown(0.5);
+
+    doc
+      .fillColor("#000000")
+      .fontSize(12)
+      .text(`Data de geração: ${new Date().toLocaleString()}`, {
+        align: "center",
+      })
+      .moveDown(1);
+
+    const tableTop = doc.y;
+    const itemHeight = 35;
+    const columnWidths = [50, 150, 50, 130, 130, 80];
+
+    const totalTableWidth = columnWidths.reduce((a, b) => a + b, 0);
+    const pageWidth =
+
+      doc.page.width - doc.page.margins.left - doc.page.margins.right;
+    const tableX =
+      doc.page.margins.left + (pageWidth - totalTableWidth) / 2; // Centraliza a tabela
+
+    const headers = ["ID", "Reservante", "Sala", "Início", "Fim", "Status"];
+    doc.fillColor("#FFFFFF").font("Helvetica-Bold").fontSize(12);
+
+    let x = tableX;
+    headers.forEach((header, i) => {
       doc
-        .fillColor("#003366")
-        .fontSize(24)
-        .text("Relatório de Reservas", { align: "center" })
-        .moveDown(0.5);
-  
-      doc
-        .fillColor("#000000")
-        .fontSize(12)
-        .text(`Data de geração: ${new Date().toLocaleString()}`, {
-          align: "center",
-        })
-        .moveDown(1);
+        .rect(x, tableTop, columnWidths[i], itemHeight)
+        .fill("#003366")
+        .fillColor("#FFFFFF")
+        .text(header, x + 5, tableTop + 10, {
+          width: columnWidths[i] - 10,
+          align: "left",
+        });
+      x += columnWidths[i];
+    });
 
-      const tableTop = doc.y;
-      const itemHeight = 35;
-      const columnWidths = [50, 150, 50, 130, 130, 80];
-  
-      const totalTableWidth = columnWidths.reduce((a, b) => a + b, 0);
-      const pageWidth =
-        doc.page.width - doc.page.margins.left - doc.page.margins.right;
-      const tableX =
-        doc.page.margins.left + (pageWidth - totalTableWidth) / 2; // Centraliza a tabela
-  
-      const headers = ["ID", "Reservante", "Sala", "Início", "Fim", "Status"];
-      doc.fillColor("#FFFFFF").font("Helvetica-Bold").fontSize(12);
+    let y = tableTop + itemHeight;
+    doc.font("Helvetica").fontSize(11).fillColor("#000000");
 
-      let x = tableX;
-      headers.forEach((header, i) => {
-        doc
-          .rect(x, tableTop, columnWidths[i], itemHeight)
-          .fill("#003366")
-          .fillColor("#FFFFFF")
-          .text(header, x + 5, tableTop + 10, {
-            width: columnWidths[i] - 10,
-            align: "left",
-          });
+    rows.forEach((r, index) => {
+      x = tableX;
+      const rowColor = index % 2 === 0 ? "#f2f2f2" : "#ffffff";
+      const rowData = [
+        r.idreserva,
+        r.nomeReservante,
+        r.idSala,
+        new Date(r.dataInicio).toLocaleString(),
+        new Date(r.dataFim).toLocaleString(),
+        r.reservaStatus,
+      ];
+
+      rowData.forEach((text, i) => {
+        doc.rect(x, y, columnWidths[i], itemHeight).fill(rowColor);
+        doc.fillColor("#000000").text(text, x + 5, y + 10, {
+          width: columnWidths[i] - 10,
+          align: "left",
+        });
         x += columnWidths[i];
       });
 
-      let y = tableTop + itemHeight;
-      doc.font("Helvetica").fontSize(11).fillColor("#000000");
-  
-      rows.forEach((r, index) => {
-        x = tableX;
-        const rowColor = index % 2 === 0 ? "#f2f2f2" : "#ffffff";
-        const rowData = [
-          r.idreserva,
-          r.nomeReservante,
-          r.idSala,
-          new Date(r.dataInicio).toLocaleString(),
-          new Date(r.dataFim).toLocaleString(),
-          r.reservaStatus,
-        ];
-  
-        rowData.forEach((text, i) => {
-          doc.rect(x, y, columnWidths[i], itemHeight).fill(rowColor);
-          doc.fillColor("#000000").text(text, x + 5, y + 10, {
-            width: columnWidths[i] - 10,
-            align: "left",
-          });
-          x += columnWidths[i];
-        });
-  
-        y += itemHeight;
+      y += itemHeight;
 
-        if (y > 750) {
-          doc.addPage();
-          y = 60;
-        }
+      if (y > 750) {
+        doc.addPage();
+        y = 60;
+      }
+    });
+
+    doc
+      .moveTo(tableX, y + 10)
+      .lineTo(tableX + totalTableWidth, y + 10)
+      .strokeColor("#999999")
+      .lineWidth(0.5)
+      .stroke();
+
+    y += 25;
+    doc
+      .fontSize(10)
+      .fillColor("#666666")
+      .text(`Total de reservas: ${rows.length}`, tableX, y, {
+        width: totalTableWidth,
+        align: "center",
       });
 
-      doc
-        .moveTo(tableX, y + 10)
-        .lineTo(tableX + totalTableWidth, y + 10)
-        .strokeColor("#999999")
-        .lineWidth(0.5)
-        .stroke();
+    doc.end();
 
-      y += 25; 
-      doc
-        .fontSize(10)
-        .fillColor("#666666")
-        .text(`Total de reservas: ${rows.length}`, tableX, y, {
-          width: totalTableWidth,
-          align: "center",
-        });
-
-      doc.end();
-  
-      writeStream.on("finish", () => {
-        res.download(filePath, "relatorio_reservas.pdf", (err) => {
-          if (err) console.error(err);
-          fs.unlinkSync(filePath);
-        });
+    writeStream.on("finish", () => {
+      res.download(filePath, "relatorio_reservas.pdf", (err) => {
+        if (err) console.error(err);
+        fs.unlinkSync(filePath);
       });
-    } catch (error) {
-      console.error("Erro ao gerar PDF:", error);
-      res.status(500).send("Erro ao gerar relatório em PDF");
-    }
-  });
+    });
+  } catch (error) {
+    console.error("Erro ao gerar PDF:", error);
+    res.status(500).send("Erro ao gerar relatório em PDF");
+  }
+});
 
 app.get("/reservas/ocupadas/:idSala/:data", async (req, res) => {
   try {

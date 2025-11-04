@@ -6,44 +6,72 @@
     --texto-destaque: rgba(25, 42, 107);
     --sombra: rgba(25, 42, 107, 0.3);
     --fundo-botao: white;
+    --fundo-pagina: #f7f7f7;
+    --fundo-card: white;
+    --texto-card: #333;
 }
 
 [data-tema="ciano"] {
     --cor-primaria: #006064;
     --texto-destaque: #006064;
     --sombra: rgba(0, 188, 212, 0.3);
-    --fundo-botao: white;
 }
 
 [data-tema="azul-claro"] {
     --cor-primaria: #0d47a1;
     --texto-destaque: #0d47a1;
     --sombra: rgba(33, 150, 243, 0.3);
-    --fundo-botao: white;
 }
 
 [data-tema="verde"] {
     --cor-primaria: #1b5e20;
     --texto-destaque: #1b5e20;
     --sombra: rgba(76, 175, 80, 0.3);
-    --fundo-botao: white;
 }
 
 [data-tema="roxo"] {
     --cor-primaria: #4a148c;
     --texto-destaque: #4a148c;
     --sombra: rgba(156, 39, 176, 0.3);
-    --fundo-botao: white;
+}
+
+/* ====================== CORES CLARAS NO MODO ESCURO ====================== */
+body.modo-escuro[data-tema="azul"] {
+    --cor-primaria: #3a5bc7;
+    --texto-destaque: #5a7be0;
+    --sombra: rgba(58, 91, 199, 0.6);
+}
+
+body.modo-escuro[data-tema="roxo"] {
+    --cor-primaria: #7e57c2;
+    --texto-destaque: #9c7bd6;
+    --sombra: rgba(126, 87, 194, 0.6);
+}
+
+body.modo-escuro[data-tema="ciano"] {
+    --cor-primaria: #00d4e0;
+    --texto-destaque: #00f0ff;
+}
+
+body.modo-escuro[data-tema="azul-claro"] {
+    --cor-primaria: #42a5f5;
+    --texto-destaque: #64b5f6;
+}
+
+body.modo-escuro[data-tema="verde"] {
+    --cor-primaria: #66bb6a;
+    --texto-destaque: #81c784;
 }
 
 /* ====================== ESTILOS GLOBAIS ====================== */
 body {
     font-family: 'Open Sans', sans-serif;
-    background-color: #f7f7f7;
+    background-color: var(--fundo-pagina);
     margin: 0;
     height: 100vh;
     box-sizing: border-box;
     padding: 0;
+    transition: background-color 0.3s ease;
 }
 
 h1 {
@@ -52,6 +80,7 @@ h1 {
     color: var(--texto-destaque);
     margin-top: 0.3%;
     margin-bottom: 0;
+    font-size: 2rem;
 }
 
 #listaReservas {
@@ -63,7 +92,8 @@ h1 {
 }
 
 .reservaCard {
-    background-color: white;
+    background-color: var(--fundo-card);
+    color: var(--texto-card);
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 0 12px var(--sombra);
@@ -94,29 +124,31 @@ h1 {
     font-size: 12px;
 }
 
-/* STATUS NÃO MUDA */
 .status {
     font-weight: bold;
     text-transform: capitalize;
 }
 
-.status.ativa { color: green; }
-.status.finalizada { color: rgb(221, 221, 68); }
-.status.cancelada { color: red; }
+.status.ativa { color: #4caf50; }
+.status.finalizada { color: #ffeb3b; }
+.status.cancelada { color: #f44336; }
 
 /* ====================== CABEÇALHO ====================== */
 #cabecalho {
-    position: absolute;
+    position: fixed;
+    top: 0;
     width: 100vw;
     height: 6vh;
-    background-color: white;
+    background-color: var(--fundo-card);
     box-shadow: 0 0 12px var(--sombra);
     z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #voltarPaginaInicial {
     position: absolute;
-    top: 30%;
     left: 2%;
     width: 1.5vw;
     cursor: pointer;
@@ -129,7 +161,7 @@ h1 {
 
 .icones {
     width: 2vw;
-    cursor: pointer;
+    height: auto;
 }
 
 /* ====================== BOTÃO DOWNLOAD ====================== */
@@ -141,12 +173,11 @@ h1 {
     background-color: var(--fundo-botao);
     box-shadow: 0 0 10px var(--sombra);
     position: absolute;
-    left: 90%;
-    top: 10%;
+    right: 2%;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px; /* ESPAÇO ENTRE ÍCONE E TEXTO */
+    gap: 8px;
     transition: transform 0.3s ease;
     padding: 0 10px;
 }
@@ -157,13 +188,29 @@ h1 {
 
 #baixarRelatorio {
     width: 1.8vw;
-    height: auto;
 }
 
-#downloadEscrita {
-    color: var(--texto-destaque);
-    font-weight: bold;
-    font-size: 12px;
-    margin: 0;
-    white-space: nowrap;
+/* ====================== MODO ESCURO ====================== */
+body.modo-escuro {
+    --fundo-pagina: #2e2e2e;
+    --fundo-card: #1a1a1a;
+    --fundo-botao: #1a1a1a;
+    --texto-card: #e0e0e0;
 }
+
+body.modo-escuro .reservaCard {
+    border: 1px solid #444;
+}
+
+body.modo-escuro .informacoesReserva,
+body.modo-escuro .valor {
+    color: #ccc;
+}
+
+body.modo-escuro #downloadEscrita {
+    color: #e0e0e0;
+}
+
+body.modo-escuro .status.ativa { color: #81c784; }
+body.modo-escuro .status.finalizada { color: #fff59d; }
+body.modo-escuro .status.cancelada { color: #ef9a9a; }
