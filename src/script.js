@@ -8,7 +8,9 @@ const traducoes = {
         erroReserva: "Erro ao realizar a reserva", sucessoCadastro: "Sala cadastrada com sucesso!",
         erroCadastro: "Erro ao cadastrar sala!", geral: "Geral", personalizacao: "Personalização",
         idioma: "Idioma", cadastrar: "Cadastrar", salas: "SALAS",
-        selecioneHorario: "Selecione o horário", reservar: "Reservar"
+        selecioneHorario: "Selecione o horário", reservar: "Reservar",
+        corDestaque: "Cor de Destaque",
+        modoEscuro: "Modo Escuro"
     },
     en: {
         paginaInicial: "Home", reservas: "Bookings", cadastro: "Register",
@@ -19,7 +21,9 @@ const traducoes = {
         erroReserva: "Error making reservation", sucessoCadastro: "Room registered successfully!",
         erroCadastro: "Error registering room!", geral: "General", personalizacao: "Customization",
         idioma: "Language", cadastrar: "Register", salas: "ROOMS",
-        selecioneHorario: "Select a time", reservar: "Book"
+        selecioneHorario: "Select a time", reservar: "Book",
+        corDestaque: "Highlight Color",
+        modoEscuro: "Dark Mode"
     },
     es: {
         paginaInicial: "Página Principal", reservas: "Reservas", cadastro: "Registro",
@@ -30,7 +34,9 @@ const traducoes = {
         erroReserva: "Error al realizar la reserva", sucessoCadastro: "¡Sala registrada con éxito!",
         erroCadastro: "Error al registrar la sala", geral: "General", personalizacao: "Personalización",
         idioma: "Idioma", cadastrar: "Registrar", salas: "SALAS",
-        selecioneHorario: "Seleccione un horario", reservar: "Reservar"
+        selecioneHorario: "Seleccione un horario", reservar: "Reservar",
+        corDestaque: "Color de Destaque",
+        modoEscuro: "Modo Oscuro"
     }
 };
 
@@ -72,14 +78,36 @@ function traduzirValor(campo, valor, idioma) {
     return traducoesBanco[campo]?.[idioma]?.[valor] || valor;
 }
 
-// === SOM DE NOTIFICAÇÃO ===
-function tocarSomSucesso() {
-    const audio = new Audio('./sounds/sucesso.mp3');
-    audio.volume = 0.5;
-    audio.play().catch(() => {}); // Ignora erro de autoplay
+let somSucesso = null;
+
+function carregarSomSucesso() {
+    somSucesso = new Audio('./sounds/Victory Sound Effect.mp3');
+    somSucesso.volume = 0.5;
+    somSucesso.preload = 'auto';
 }
 
-// === SISTEMA DE ÍCONES POR TEMA ===
+function tocarSomSucesso() {
+    if (!window.somAtivado) return; // RESPEITA O TOGGLE
+
+    if (!somSucesso) carregarSomSucesso();
+
+    somSucesso.currentTime = 0;
+    const promessa = somSucesso.play();
+
+    if (promessa !== undefined) {
+        promessa.catch(err => {
+            console.warn("Som bloqueado (autoplay). Tentando desbloquear...", err);
+            const desbloquear = () => {
+                somSucesso.play().catch(() => {});
+                document.removeEventListener('click', desbloquear);
+                document.removeEventListener('touchstart', desbloquear);
+            };
+            document.addEventListener('click', desbloquear, { once: true });
+            document.addEventListener('touchstart', desbloquear, { once: true });
+        });
+    }
+}
+
 const iconesPorTema = {
     "azul": { config: "./images/configuracoes_branco.png", lapis: "./images/lapis.png", engrenagem: "./images/configuracoes.png" },
     "ciano": { config: "./images/configuracoes_ciano.png", lapis: "./images/lapis_ciano.png", engrenagem: "./images/configuracoes_ciano.png" },
@@ -103,14 +131,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const idiomaSalvo = localStorage.getItem("idioma") || "pt";
     const temaSalvo = localStorage.getItem("tema") || "azul";
 
-    // Aplicar idioma e tema salvos
     if (selectIdioma) selectIdioma.value = idiomaSalvo;
     document.documentElement.setAttribute("data-tema", temaSalvo);
     if (document.getElementById("selecaoCor")) document.getElementById("selecaoCor").value = temaSalvo;
     atualizarIcones(temaSalvo);
     aplicarIdioma(idiomaSalvo);
 
-    // Elementos DOM
     const listaSalas = document.getElementById('listaSalas');
     const telaReserva = document.querySelector('#telaReservar');
     const overlay = document.getElementById('overlay');
@@ -133,36 +159,67 @@ document.addEventListener('DOMContentLoaded', async () => {
     tituloPaginaConfig.textContent = traducoes[idiomaSalvo].geral;
     tituloPaginaConfig.setAttribute('data-i18n', 'geral');
 
-    // === CARREGAR SALAS ===
-    async function carregarSalas() {
+    async function carregarSalas(filtro = '') {
         try {
             const response = await fetch('/salas');
             const salasLabs = await response.json();
+            const listaSalas = document.getElementById('listaSalas');
             listaSalas.innerHTML = '';
 
             const idiomaAtual = localStorage.getItem("idioma") || "pt";
 
-            salasLabs.forEach(sala => {
+            const salasFiltradas = salasLabs.filter(sala =>
+                sala.numero.toString().includes(filtro)
+            );
+
+            if (salasFiltradas.length === 0) {
+                listaSalas.innerHTML = `<p style="text-align: center; color: var(--texto-destaque); font-weight: bold;">Nenhuma sala encontrada.</p>`;
+                return;
+            }
+
+            salasFiltradas.forEach(sala => {
                 const divSala = document.createElement('div');
                 divSala.className = 'formulario';
                 divSala.id = `sala-${sala.idSala}`;
 
                 const tipoTraduzido = traduzirValor('tipo', sala.tipo, idiomaAtual);
 
+                // === ÍCONES POR TIPO ===
+                let iconesHTML = '';
+                if (sala.tipo === 'Sala') {
+                    iconesHTML = `
+                        <div class="iconesSala">
+                            <img src="./images/televisao.png" alt="TV" class="iconeSala">
+                            <img src="./images/tomada.png" alt="Tomada" class="iconeSala">
+                        </div>
+                    `;
+                } else if (sala.tipo === 'Laboratório') {
+                    iconesHTML = `
+                        <div class="iconesSala">
+                            <img src="./images/tomada.png" alt="Tomada" class="iconeSala">
+                            <img src="./images/projetor.png" alt="Projetor" class="iconeSala">
+                            <img src="./images/computador.png" alt="Computador" class="iconeSala">
+                        </div>
+                    `;
+                }
+
                 divSala.innerHTML = `
-                    <label><strong data-i18n="sala"></strong> <span id="numero-sala-${sala.idSala}">${sala.numero}</span></label><br>
+                    <div class="cabecalhoCard">
+                        <label><strong data-i18n="sala"></strong> <span id="numero-sala-${sala.idSala}">${sala.numero}</span></label>
+                        ${iconesHTML}
+                    </div>
                     <label><strong data-i18n="capacidade"></strong> <span id="capacidade-sala-${sala.idSala}">${sala.capacidade}</span></label><br>
                     <label><strong data-i18n="andar"></strong> <span id="andar-sala-${sala.idSala}">${sala.andar}</span></label><br>
                     <label><strong data-i18n="bloco"></strong> <span id="bloco-sala-${sala.idSala}">${sala.bloco}</span></label><br>
                     <label><strong data-i18n="tipo"></strong> 
                         <span id="tipo-sala-${sala.idSala}" data-tipo-original="${sala.tipo}">${tipoTraduzido}</span>
                     </label><br>
-                    <button class="reservaBotao" data-i18n="reservar" id="sala-${sala.idSala}"></button>
+                    <button class="reservaBotao" data-i18n="reservar" id="botao-${sala.idSala}"></button>
                 `;
 
                 listaSalas.appendChild(divSala);
 
-                const botaoReserva = divSala.querySelector(`#sala-${sala.idSala}`);
+                const botaoReserva = divSala.querySelector(`#botao-${sala.idSala}`);
                 botaoReserva.addEventListener('click', () => {
                     telaReserva.removeAttribute('hidden');
                     overlay.removeAttribute('hidden');
@@ -184,11 +241,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             aplicarIdioma(idiomaAtual);
         } catch (error) {
             console.error('Erro ao carregar salas:', error);
-            alert('Erro ao carregar salas');
+            const listaSalas = document.getElementById('listaSalas');
+            listaSalas.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar salas.</p>';
         }
     }
 
-    // === MUDANÇA DE IDIOMA ===
     if (selectIdioma) {
         selectIdioma.addEventListener("change", (e) => {
             const idiomaEscolhido = e.target.value;
@@ -210,17 +267,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // === MUDANÇA DE TEMA ===
     if (document.getElementById("selecaoCor")) {
         document.getElementById("selecaoCor").addEventListener("change", (e) => {
             const tema = e.target.value;
             document.documentElement.setAttribute("data-tema", tema);
             localStorage.setItem("tema", tema);
             atualizarIcones(tema);
+
+            if (document.body.classList.contains('modo-escuro')) {
+                document.body.classList.remove('modo-escuro');
+                setTimeout(() => document.body.classList.add('modo-escuro'), 10);
+            }
         });
     }
 
-    // === EVENTOS DE UI ===
     paginaInicial.addEventListener('click', () => {
         telaReserva.setAttribute('hidden', 'hidden');
         telaCadastro.setAttribute('hidden', 'hidden');
@@ -281,14 +341,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // === ENGRENAGEM GIRATÓRIA ===
     const engrenagem = document.querySelector('#engrenagemGeral');
     if (engrenagem) {
         engrenagem.addEventListener('mouseover', () => engrenagem.classList.add('girarEngrenagem'));
         engrenagem.addEventListener('mouseleave', () => engrenagem.classList.remove('girarEngrenagem'));
     }
 
-    // === CAPITALIZAR INPUTS ===
     ['tipo', 'inputReservante'].forEach(id => {
         const input = document.getElementById(id);
         if (input) {
@@ -301,7 +359,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // === FLATPICKR ===
     const campoData = document.querySelector("#dataReserva");
     if (campoData) {
         flatpickr(campoData, {
@@ -335,7 +392,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // === CADASTRAR SALA ===
+    // === CADASTRO DE SALA ===
     document.querySelector('.botaoCadastrar').addEventListener('click', async () => {
         const novaSala = {
             numero: document.getElementById('numero').value,
@@ -353,8 +410,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             if (res.ok) {
-                alert(traducoes[localStorage.getItem("idioma") || "pt"].sucessoCadastro);
-                tocarSomSucesso(); // SOM AQUI
+                tocarSomSucesso(); // SOM PRIMEIRO
+                setTimeout(() => {
+                    alert(traducoes[localStorage.getItem("idioma") || "pt"].sucessoCadastro);
+                }, 50);
+
                 telaCadastro.setAttribute('hidden', 'hidden');
                 overlay.setAttribute('hidden', 'hidden');
                 body.classList.remove('no-scroll');
@@ -368,7 +428,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // === RESERVAR SALA ===
+    // === RESERVA DE SALA ===
     document.getElementById('formReserva').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -391,8 +451,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             if (res.ok) {
-                alert(traducoes[localStorage.getItem("idioma") || "pt"].sucessoReserva);
-                tocarSomSucesso(); // SOM AQUI
+                tocarSomSucesso(); // SOM PRIMEIRO
+                setTimeout(() => {
+                    alert(traducoes[localStorage.getItem("idioma") || "pt"].sucessoReserva);
+                }, 50);
+
                 telaReserva.setAttribute('hidden', 'hidden');
                 overlay.setAttribute('hidden', 'hidden');
                 body.classList.remove('no-scroll');
@@ -408,6 +471,56 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // === CARREGAR SALAS NO FINAL ===
+    // === MODO ESCURO ===
+    const modoEscuroToggle = document.getElementById('modoEscuroToggle');
+    const modoEscuroSalvo = localStorage.getItem("modoEscuro") === "true";
+
+    if (modoEscuroSalvo) {
+        document.body.classList.add('modo-escuro');
+        modoEscuroToggle.checked = true;
+    }
+
+    modoEscuroToggle.addEventListener('change', () => {
+        const ativado = modoEscuroToggle.checked;
+        if (ativado) {
+            document.body.classList.add('modo-escuro');
+            localStorage.setItem("modoEscuro", "true");
+        } else {
+            document.body.classList.remove('modo-escuro');
+            localStorage.setItem("modoEscuro", "false");
+        }
+    });
+
+    const somToggle = document.getElementById('somToggle');
+    const somAtivadoSalvo = localStorage.getItem("somAtivado") !== "false"; // padrão: true
+
+    somToggle.checked = somAtivadoSalvo;
+
+    somToggle.addEventListener('change', () => {
+        const ativado = somToggle.checked;
+        localStorage.setItem("somAtivado", ativado);
+
+        // Atualiza globalmente
+        window.somAtivado = ativado;
+    });
+
+    // Exporta para uso global
+    window.somAtivado = somAtivadoSalvo;
+
+    // === INICIALIZAÇÃO ===
+    carregarSomSucesso();
     await carregarSalas();
+
+    // === BARRA DE PESQUISA ===
+    const inputPesquisa = document.getElementById('inputPesquisa');
+    if (inputPesquisa) {
+        let timeout;
+        inputPesquisa.addEventListener('input', () => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                const termo = inputPesquisa.value.trim();
+                carregarSalas(termo);
+            }, 300);
+        });
+    }
 });

@@ -1,16 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
-/* ====================== VARIÁVEIS DE TEMA ====================== */
 :root {
-    --cor-primaria: rgba(25, 42, 107);     /* Azul padrão */
-    --cor-secundaria: rgba(0, 107, 113);   /* Ciano secundário */
+    --cor-primaria: rgba(25, 42, 107);
+    --cor-secundaria: rgba(0, 107, 113);
     --texto-destaque: rgba(25, 42, 107);
     --borda: rgba(25, 42, 107);
     --sombra: rgba(25, 42, 107, 0.5);
     --filtro-icone: hue-rotate(0deg) saturate(1);
 }
 
-/* CIANO */
 [data-tema="ciano"] {
     --cor-primaria: #006064;
     --cor-secundaria: #00bcd4;
@@ -20,7 +18,6 @@
     --filtro-icone: hue-rotate(180deg) saturate(1.2);
 }
 
-/* AZUL CLARO */
 [data-tema="azul-claro"] {
     --cor-primaria: #0d47a1;
     --cor-secundaria: #2196f3;
@@ -30,7 +27,6 @@
     --filtro-icone: hue-rotate(210deg) saturate(1.3);
 }
 
-/* VERDE */
 [data-tema="verde"] {
     --cor-primaria: #1b5e20;
     --cor-secundaria: #4caf50;
@@ -40,7 +36,6 @@
     --filtro-icone: hue-rotate(120deg) saturate(1.4);
 }
 
-/* ROXO */
 [data-tema="roxo"] {
     --cor-primaria: #4a148c;
     --cor-secundaria: #9c27b0;
@@ -50,8 +45,37 @@
     --filtro-icone: hue-rotate(300deg) saturate(1.2);
 }
 
-/* ====================== SEU CÓDIGO ORIGINAL (SÓ CORES TROCADAS) ====================== */
+/* ====================== CORES CLARAS NO MODO ESCURO ====================== */
+body.modo-escuro[data-tema="azul"] {
+    --cor-primaria: #3a5bc7;
+    --texto-destaque: #5a7be0;
+    --borda: #5a7be0;
+    --sombra: rgba(58, 91, 199, 0.6);
+}
 
+body.modo-escuro[data-tema="roxo"] {
+    --cor-primaria: #7e57c2;
+    --texto-destaque: #9c7bd6;
+    --borda: #9c7bd6;
+    --sombra: rgba(126, 87, 194, 0.6);
+}
+
+body.modo-escuro[data-tema="ciano"] {
+    --cor-primaria: #00d4e0;
+    --texto-destaque: #00f0ff;
+}
+
+body.modo-escuro[data-tema="azul-claro"] {
+    --cor-primaria: #42a5f5;
+    --texto-destaque: #64b5f6;
+}
+
+body.modo-escuro[data-tema="verde"] {
+    --cor-primaria: #66bb6a;
+    --texto-destaque: #81c784;
+}
+
+/* ====================== ANIMAÇÕES ====================== */
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -62,6 +86,7 @@
     to { transform: rotate(360deg); }
 }
 
+/* ====================== LAYOUT BÁSICO ====================== */
 body, html {
     margin: 0;
     height: 100vh;
@@ -180,7 +205,7 @@ body:not(:has(#overlay[hidden])) .botaoConfiguracoes {
     padding: 0.8vh;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 1em;
 }
 
 .nomeSala {
@@ -760,7 +785,7 @@ label[for="horario"] {
     transition: background-color 0.3s ease;
 }
 
-/* ====================== SELECT DE CORES (IGUAL AO IDIOMA) ====================== */
+/* ====================== SELECT DE CORES ====================== */
 #selecaoCor {
     flex: 1;
     max-width: 120px;
@@ -780,17 +805,314 @@ label[for="horario"] {
     box-shadow: 0 0 6px var(--sombra);
 }
 
-.personalizacaoLinha {
+/* ====================== PERSONALIZAÇÃO: COR + MODO ESCURO (CORRIGIDO) ====================== */
+#conteudoPersonalizacao .personalizacaoLinha:first-of-type {
     position: absolute;
     left: -15%;
+    top: 80px;
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-top: 80px;
+    gap: 7em;
     padding: 0 10%;
+    font-family: 'Open Sans';
+    color: var(--texto-destaque);
+    width: 100%;
+}
+
+/* MODO ESCURO (ABAIXO DA COR, ALINHADO) */
+#conteudoPersonalizacao .personalizacaoLinha:nth-of-type(2) {
+    position: absolute;
+    left: -15%;
+    top: 140px;
+    display: flex;
+    align-items: center;
     gap: 8em;
+    padding: 0 10%;
+    font-family: 'Open Sans';
+    color: var(--texto-destaque);
+    width: 100%;
 }
 
 .personalizacaoLinha .labelIdioma {
     color: var(--texto-destaque);
+    font-weight: bold;
+    font-size: 16px;
+    white-space: nowrap;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+/* ====================== TOGGLE MODO ESCURO ====================== */
+.toggle-container {
+    display: flex;
+    align-items: center;
+}
+
+.toggle-checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.toggle-slot {
+    font-size: 10px;
+    position: relative;
+    height: 3.5em;
+    width: 7em;
+    border-radius: 10em;
+    background-color: white;
+    transition: background-color 250ms;
+    box-shadow: 0 0 6px var(--sombra);
+    cursor: pointer;
+}
+
+.toggle-checkbox:checked ~ .toggle-slot {
+    background-color: #374151;
+}
+
+.toggle-button {
+    transform: translate(0.3em, 0.25em);
+    position: absolute;
+    height: 3em;
+    width: 3em;
+    border-radius: 50%;
+    background-color: #ffeccf;
+    box-shadow: inset 0px 0px 0px 0.75em #ffbb52;
+    transition: background-color 250ms, border-color 250ms, transform 500ms cubic-bezier(.26,2,.46,.71);
+}
+
+.toggle-checkbox:checked ~ .toggle-slot .toggle-button {
+    background-color: #485367;
+    box-shadow: inset 0px 0px 0px 0.75em white;
+    transform: translate(3.65em, 0.25em);
+}
+
+.sun-icon, .moon-icon {
+    position: absolute;
+    height: 6em;
+    width: 6em;
+}
+
+.sun-icon-wrapper, .moon-icon-wrapper {
+    position: absolute;
+    height: 6em;
+    width: 6em;
+    opacity: 1;
+    transform: translate(2em, 2em) rotate(15deg);
+    transform-origin: 50% 50%;
+    transition: opacity 150ms, transform 500ms cubic-bezier(.26,2,.46,.71);
+    pointer-events: none;
+}
+
+.toggle-checkbox:checked ~ .toggle-slot .sun-icon-wrapper {
+    opacity: 0;
+    transform: translate(3em, 2em) rotate(0deg);
+}
+
+.toggle-checkbox:checked ~ .toggle-slot .moon-icon-wrapper {
+    opacity: 1;
+    transform: translate(2em, 2em) rotate(-15deg);
+}
+
+body.modo-escuro .toggle-slot {
+    background-color: #374151;
+}
+
+body.modo-escuro .toggle-checkbox:checked ~ .toggle-slot {
+    background-color: #2c3e50;
+}
+
+/* ====================== MODO ESCURO (CORRIGIDO) ====================== */
+body.modo-escuro {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+}
+
+body.modo-escuro .formulario,
+body.modo-escuro #telaConfiguracoes,
+body.modo-escuro #telaCadastro,
+body.modo-escuro #telaReservar,
+body.modo-escuro .divAbaIndividual,
+body.modo-escuro .containerReserva {
+    background-color: #1a1a1a;
+    border-color: var(--cor-primaria);
+    color: #e0e0e0;
+}
+
+body.modo-escuro input,
+body.modo-escuro select,
+body.modo-escuro .inputSala,
+body.modo-escuro #inputReservante,
+body.modo-escuro #dataReserva,
+body.modo-escuro #horario,
+body.modo-escuro #idioma,
+body.modo-escuro #selecaoCor {
+    background-color: #2d2d2d !important;
+    color: #e0e0e0 !important;
+    border-color: #555 !important;
+}
+
+body.modo-escuro .botaoCadastrar,
+body.modo-escuro .botaoReservar,
+body.modo-escuro .reservaBotao {
+    background-color: var(--cor-primaria);
+    color: white;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+}
+
+body.modo-escuro .abaAtiva {
+    background-color: #666666 !important;
+}
+
+body.modo-escuro .infoReserva {
+    color: #ccc;
+}
+
+body.modo-escuro .categoriaSala,
+body.modo-escuro .tituloPagina,
+body.modo-escuro .abasConfig,
+body.modo-escuro .camposFormulario,
+body.modo-escuro #nomeReservante,
+body.modo-escuro .configuracoesEscrita,
+body.modo-escuro .nomeSala,
+body.modo-escuro .formulario label {
+    color: var(--texto-destaque) !important;
+}
+
+body.modo-escuro .linha1,
+body.modo-escuro .linha2,
+body.modo-escuro .linha3,
+body.modo-escuro .linha4,
+body.modo-escuro .linha5,
+body.modo-escuro .linha6 {
+    background-color: #555;
+}
+
+/* ====================== BARRA DE PESQUISA ====================== */
+#containerPesquisa {
+    width: 90%;
+    margin: 2em auto 1em auto;
+    display: flex;
+    justify-content: center;
+}
+
+#barraPesquisa {
+    position: absolute;
+    top: 48%;
+    left: 40%;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 8px 12px;
+    box-shadow: 0 0 8px var(--sombra);
+    transition: all 0.3s ease;
+}
+
+#barraPesquisa:focus-within {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 12px var(--sombra);
+}
+
+#iconeLupa {
+    width: 1.2vw;
+    margin-right: 10px;
+    filter: var(--filtro-icone, none);
+}
+
+#inputPesquisa {
+    border: none;
+    outline: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    width: 100%;
+    color: var(--texto-destaque);
+}
+
+#inputPesquisa::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* ====================== MODO ESCURO ====================== */
+body.modo-escuro #barraPesquisa {
+    background-color: #2d2d2d;
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+body.modo-escuro #inputPesquisa {
+    color: #e0e0e0;
+    background-color: transparent;
+}
+
+body.modo-escuro #inputPesquisa::placeholder {
+    color: #aaa;
+}
+
+body.modo-escuro #iconeLupa {
+    filter: brightness(0) invert(1);
+}
+
+/* ====================== ÍCONES NOS CARDS ====================== */
+.cabecalhoCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.iconesSala {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.iconeSala {
+    width: 1.8vw;
+    height: auto;
+    min-width: 24px;
+    filter: var(--filtro-icone, none);
+    transition: filter 0.3s ease;
+}
+
+/* MODO ESCURO */
+body.modo-escuro .iconeSala {
+    filter: brightness(0) invert(1) !important;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .iconeSala {
+        width: 5vw;
+        min-width: 20px;
+    }
+}
+
+/* ====================== TOGGLE SOM (ABA GERAL) ====================== */
+#conteudoGeral .somLinha {
+    position: absolute;
+    left: -15%;
+    top: 140px;
+    display: flex;
+    align-items: center;
+    gap: 8em;
+    padding: 0 10%;
+    font-family: 'Open Sans';
+    color: var(--texto-destaque);
+    width: 100%;
+}
+
+#conteudoGeral .somLinha .labelIdioma {
+    color: var(--texto-destaque);
+    font-weight: bold;
+    font-size: 16px;
+    white-space: nowrap;
+    margin: 0;
+    flex-shrink: 0;
 }

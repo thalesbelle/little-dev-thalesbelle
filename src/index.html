@@ -22,13 +22,23 @@
         <img src="/images/sala futurista cabeçalho do site.png" id="cabecalhoImagem">
     </header>
 
+    <div id="containerPesquisa">
+        <div id="barraPesquisa">
+            <svg id="iconeLupa" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="inputPesquisa" placeholder="Pesquisar sala..." data-i18n-placeholder="pesquisarSala">
+        </div>
+    </div>
+    <div class="divSalas" id="listaSalas"></div>
+
     <section id="telaReservar" hidden>
         <img src="./images/seta-voltar.png" class="icones" id="fecharReserva">
         <div id="linha5"></div>
         <h1 id="tituloSalaReserva"></h1>
         <div class="containerReserva">
-            <p class="infoReserva"><strong data-i18n="capacidade">Capacidade:</strong> <span
-                    id="reserva-capacidade"></span></p>
+            <p class="infoReserva"><strong data-i18n="capacidade">Capacidade:</strong> <span id="reserva-capacidade"></span></p>
             <p class="infoReserva"><strong data-i18n="andar">Andar:</strong> <span id="reserva-andar"></span></p>
             <p class="infoReserva"><strong data-i18n="bloco">Bloco:</strong> <span id="reserva-bloco"></span></p>
             <p class="infoReserva"><strong data-i18n="tipo">Tipo:</strong> <span id="reserva-tipo"></span></p>
@@ -56,7 +66,7 @@
                 <option value="20:00-21:30">20:00 - 21:30</option>
             </select>
 
-            <label for="nomeReservante" id="nomeReservante" data-i18n="nomeReservante">Nome do Reservante:</label>
+            <label for="inputReservante" id="nomeReservante" data-i18n="nomeReservante">Nome do Reservante:</label>
             <input type="text" id="inputReservante" placeholder="Seu nome" required>
             <button type="submit" class="botaoReservar" data-i18n="confirmar">Confirmar</button>
         </form>
@@ -84,21 +94,32 @@
             <div class="linha2"></div>
             <h1 id="tituloPaginaConfig" class="tituloPagina" data-i18n="geral">Geral</h1>
 
-            <!-- CONTEÚDO DA ABA GERAL -->
             <div id="conteudoGeral" class="conteudoAba">
                 <div class="idiomaLinha">
-                    <label data-i18n="idioma" class="labelIdioma">Idioma</label>
+                    <label class="labelIdioma" data-i18n="idioma">Idioma</label>
                     <select id="idioma">
                         <option value="pt">Português</option>
                         <option value="en">English</option>
                         <option value="es">Español</option>
                     </select>
                 </div>
+
+                <div class="somLinha">
+                    <label class="labelIdioma" data-i18n="somNotificacao">Som de Notificação</label>
+                    <div class="toggle-container">
+                        <input type="checkbox" id="somToggle" class="toggle-checkbox" checked>
+                        <label for="somToggle" class="toggle-slot">
+                            <div class="sun-icon-wrapper"><div class="sun-icon"></div></div>
+                            <div class="moon-icon-wrapper"><div class="moon-icon"></div></div>
+                            <div class="toggle-button"></div>
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div id="conteudoPersonalizacao" class="conteudoAba oculto">
                 <div class="personalizacaoLinha">
-                    <label class="labelIdioma">Cor destaque</label>
+                    <label class="labelIdioma" for="selecaoCor" data-i18n="corDestaque">Cor de Destaque</label>
                     <select id="selecaoCor">
                         <option value="azul">Azul (padrão)</option>
                         <option value="ciano">Ciano</option>
@@ -107,11 +128,26 @@
                         <option value="roxo">Roxo</option>
                     </select>
                 </div>
+
+                <div class="personalizacaoLinha" style="margin-top: 20px;">
+                    <label class="labelIdioma" for="modoEscuroToggle" data-i18n="modoEscuro">Modo Escuro</label>
+                    <div class="toggle-container">
+                        <input type="checkbox" id="modoEscuroToggle" class="toggle-checkbox">
+                        <label for="modoEscuroToggle" class="toggle-slot">
+                            <div class="sun-icon-wrapper">
+                                <div class="sun-icon"></div>
+                            </div>
+                            <div class="moon-icon-wrapper">
+                                <div class="moon-icon"></div>
+                            </div>
+                            <div class="toggle-button"></div>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- TELA DE CADASTRO -->
     <section id="telaCadastro" hidden>
         <img src="./images/seta-voltar.png" class="icones" id="fecharCadastro">
         <h1 id="tituloCadastro" data-i18n="cadastroSala">Cadastro de sala</h1>
@@ -132,15 +168,9 @@
         <button class="botaoCadastrar" data-i18n="cadastrar">Cadastrar</button>
     </section>
 
-    <!-- LISTA DE SALAS -->
-    <section class="containerSalas">
-        <div id="listaSalas" class="divSalas"></div>
-    </section>
-
     <div id="overlay" hidden></div>
 
     <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </body>
 
 </html>

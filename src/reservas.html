@@ -11,14 +11,15 @@
 <body>
     <div id="cabecalho">
         <h1 data-i18n="reservas">Reservas</h1>
-        <img src="./images/seta-voltar.png" id="voltarPaginaInicial">
-        <div id="fundoDownload" onclick="window.open('/relatorio-reservas')">
+        <img src="./images/seta-voltar.png" id="voltarPaginaInicial" class="icones">
+        <div id="fundoDownload">
             <img src="./images/download-azul.png" class="icones" id="baixarRelatorio" title="Baixar relatório">
-            <p id="downloadEscrita">Download</p>
+            <p id="downloadEscrita" data-i18n="baixarRelatorio">Download</p>
         </div>    
     </div>
 
     <div id="listaReservas"></div>
+
     <script src="scriptReservas.js"></script>
 </body>
 

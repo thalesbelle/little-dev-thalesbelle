@@ -1,5 +1,5 @@
 const traducoesReservas = {
-    pt: { reservas: "Reservas", reservasTitulo: "Reservas - RoomMates", baixarRelatorio: "Baixar relatório" },
+    pt: { reservas: "Reservas", reservasTitulo: "Reservas - RoomMates", baixarRelatorio: "Download" },
     en: { reservas: "Bookings", reservasTitulo: "Bookings - RoomMates", baixarRelatorio: "Download report" },
     es: { reservas: "Reservas", reservasTitulo: "Reservas - RoomMates", baixarRelatorio: "Descargar reporte" }
 };
@@ -10,10 +10,10 @@ function aplicarIdiomaReservas(idioma) {
         const key = el.getAttribute("data-i18n");
         if (t[key]) el.textContent = t[key];
     });
-    document.title = t.reservasTitulo || document.title;
+    document.title = t.reservasTitulo;
 }
 
-// === SISTEMA DE ÍCONES POR TEMA ===
+// === ÍCONES POR TEMA ===
 const iconesReservas = {
     "azul": { voltar: "./images/seta-voltar.png", download: "./images/download-azul.png" },
     "ciano": { voltar: "./images/seta-voltar-ciano.png", download: "./images/download-ciano.png" },
@@ -26,22 +26,55 @@ function atualizarIconesReservas(tema) {
     const iconeVoltar = document.getElementById('voltarPaginaInicial');
     const iconeDownload = document.getElementById('baixarRelatorio');
 
-    if (iconeVoltar && iconesReservas[tema]?.voltar) {
-        iconeVoltar.src = iconesReservas[tema].voltar;
+    if (iconeVoltar && iconesReservas[tema]?.voltar) iconeVoltar.src = iconesReservas[tema].voltar;
+    if (iconeDownload && iconesReservas[tema]?.download) iconeDownload.src = iconesReservas[tema].download;
+}
+
+// === OBSERVADOR DE MUDANÇAS NO LOCALSTORAGE (TEMA E MODO ESCURO) ===
+let temaAtual = localStorage.getItem("tema") || "azul";
+let modoEscuroAtivo = localStorage.getItem("modoEscuro") === "true";
+
+function sincronizarTemaEModo() {
+    const temaNovo = localStorage.getItem("tema") || "azul";
+    const modoEscuroNovo = localStorage.getItem("modoEscuro") === "true";
+
+    // Atualiza tema
+    if (temaNovo !== temaAtual) {
+        temaAtual = temaNovo;
+        document.documentElement.setAttribute("data-tema", temaNovo);
+        atualizarIconesReservas(temaNovo);
     }
-    if (iconeDownload && iconesReservas[tema]?.download) {
-        iconeDownload.src = iconesReservas[tema].download;
+
+    // Atualiza modo escuro
+    if (modoEscuroNovo !== modoEscuroAtivo) {
+        modoEscuroAtivo = modoEscuroNovo;
+        if (modoEscuroNovo) {
+            document.body.classList.add('modo-escuro');
+        } else {
+            document.body.classList.remove('modo-escuro');
+        }
     }
 }
+
+// Observa mudanças no localStorage (de outras abas/páginas)
+window.addEventListener('storage', (e) => {
+    if (e.key === "tema" || e.key === "modoEscuro") {
+        sincronizarTemaEModo();
+    }
+});
 
 document.addEventListener('DOMContentLoaded', async () => {
     const idiomaSalvo = localStorage.getItem("idioma") || "pt";
     aplicarIdiomaReservas(idiomaSalvo);
 
-    // === APLICA TEMA SALVO ===
-    const temaSalvo = localStorage.getItem("tema") || "azul";
-    document.documentElement.setAttribute("data-tema", temaSalvo);
-    atualizarIconesReservas(temaSalvo);
+    // === APLICA TEMA E MODO ESCURO SALVOS ===
+    temaAtual = localStorage.getItem("tema") || "azul";
+    document.documentElement.setAttribute("data-tema", temaAtual);
+    atualizarIconesReservas(temaAtual);
+
+    if (localStorage.getItem("modoEscuro") === "true") {
+        document.body.classList.add('modo-escuro');
+    }
 
     // === EVENTOS ===
     document.getElementById('voltarPaginaInicial').addEventListener('click', () => {
@@ -49,18 +82,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     document.getElementById('fundoDownload').addEventListener('click', () => {
-        window.open('/relatorio-reservas');
+        window.open('/relatorio-reservas', '_blank');
     });
 
     // === CARREGA RESERVAS ===
     async function carregarReservas() {
         const lista = document.getElementById('listaReservas');
         if (!lista) return;
-        lista.innerHTML = '';
+        lista.innerHTML = '<p>Carregando...</p>';
 
         try {
             const res = await fetch('/reservas');
             const reservas = await res.json();
+            lista.innerHTML = '';
 
             reservas.forEach(reserva => {
                 const inicio = new Date(reserva.dataInicio);
@@ -92,9 +126,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         } catch (err) {
             console.error('Erro ao carregar reservas:', err);
-            lista.innerHTML = '<p>Erro ao carregar reservas.</p>';
+            lista.innerHTML = '<p style="color: red;">Erro ao carregar reservas.</p>';
         }
     }
 
     await carregarReservas();
+
+    // === ATUALIZA EM TEMPO REAL QUANDO MUDAR TEMA/MODO ESCURO ===
+    setInterval(sincronizarTemaEModo, 500);
 });
